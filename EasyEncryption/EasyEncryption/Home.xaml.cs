@@ -1,8 +1,10 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -21,25 +23,164 @@ namespace EasyEncryption
     /// </summary>
     public partial class Home : Window
     {
+
+        EasyEncWS.MainService ms = new EasyEncWS.MainService();
+        string encryptpath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\EncryptedTest\\";
+        const string username = "Adam";
+
         public Home()
         {
             InitializeComponent();
+            getMyFiles(username);
         }
 
         private void AddFiles_Click(object sender, RoutedEventArgs e)
         {
             var FD = new OpenFileDialog();
-            if (FD.ShowDialog() == DialogResult)
+            FD.Multiselect = true;
+            FD.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            if (FD.ShowDialog() == true)
             {
-                System.IO.FileInfo file = new System.IO.FileInfo(FD.FileName);
-                addItems(file);
+                List<FileItem> fil = new List<FileItem>();
+                if (selectedFiles.ItemsSource != null)
+                    fil = (List<FileItem>)selectedFiles.ItemsSource;
+                foreach (string path in FD.FileNames)
+                {
+                    FileInfo fi = new FileInfo(path);
+                    fil.Add(new FileItem() { Originalfilename = fi.Name, path = fi.FullName, Size = fi.Length });
+                }
+                selectedFiles.ItemsSource = null;
+                selectedFiles.ItemsSource = fil;
+
             }
         }
-        private void addItems(FileInfo fi)
+
+
+        private void getMyFiles(string username)
         {
-            string[] row = { fi.Name, "" + fi.Length, fi.FullName };
-            ListViewItem lvi = new ListViewItem(row);
-            selectedFiles.Items.Add(lvi);
+            string xml = ms.retrieve(username);
+            StringReader xr = new StringReader(xml);
+            DataTable dt = new DataTable();
+            dt.ReadXml(xr);
+            FileItem fi = new FileItem();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                DataRow dr = dt.Rows[i];
+                fi.Originalfilename = (dr["Filename"].ToString());
+                fi.Size = long.Parse(dr["Size"].ToString());
+                fi.shared = (dr["SharedGroups"].ToString());
+                fi.owner = (dr["Owner"].ToString());
+                myFiles.Items.Add(fi);
+            }
         }
+
+        private void UploadBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedFiles.ItemsSource == null)
+                MessageBox.Show("No selected files!");
+            else
+            {
+                List<FileItem> fil = (List<FileItem>)selectedFiles.ItemsSource;
+                foreach (FileItem fi in fil)
+                {
+                    FileInfo fileinfo = new FileInfo(fi.path);
+                    string fileext = fileinfo.Extension;
+                    string filename = fileinfo.Name.Substring(0, fileinfo.Name.Length - fileext.Length);
+
+                    using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+                    {
+                        string serverpub = ms.getPubkey();
+                        rsa.FromXmlString(serverpub);
+                        using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+                        {
+                            byte[] key = new byte[32];
+                            byte[] IV = new byte[16];
+                            rng.GetBytes(key);
+                            rng.GetBytes(IV);
+                            using (RijndaelManaged aes = new RijndaelManaged())
+                            {
+                                aes.Mode = CipherMode.CBC;
+                                aes.IV = IV;
+                                aes.Key = key;
+                                using (FileStream fsInput = new FileStream(fi.path, FileMode.Open, FileAccess.Read))
+                                {
+                                    using (FileStream fsEncrypted = new FileStream(encryptpath + filename + ".ee", FileMode.Create, FileAccess.Write))
+                                    {
+                                        ICryptoTransform encryptor = aes.CreateEncryptor();
+                                        using (CryptoStream cryptostream = new CryptoStream(fsEncrypted, encryptor, CryptoStreamMode.Write))
+                                        {
+                                            int bytesread;
+                                            byte[] buffer = new byte[16384];
+                                            while (true)
+                                            {
+                                                bytesread = fsInput.Read(buffer, 0, 16384);
+                                                if (bytesread == 0)
+                                                    break;
+                                                cryptostream.Write(buffer, 0, bytesread);
+                                            }
+                                            ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV));
+                                            selectedFiles.ItemsSource = null;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
+
+        /*
+        foreach (ListViewItem item in selectedFiles.Items)
+        {
+            string filepath = item.SubItems[2].Text;
+            FileInfo fi = new FileInfo(filepath);
+            string fileext = fi.Extension;
+            string filename = fi.Name.Substring(0, fi.Name.Length - fileext.Length);
+            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+            {
+                string serverpub = ms.getPubkey();
+                rsa.FromXmlString(serverpub);
+                using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
+                {
+                    byte[] key = new byte[32];
+                    byte[] IV = new byte[16];
+                    rng.GetBytes(key);
+                    rng.GetBytes(IV);
+                    using (RijndaelManaged aes = new RijndaelManaged())
+                    {
+                        aes.Mode = CipherMode.CBC;
+                        aes.IV = IV;
+                        aes.Key = key;
+                        using (FileStream fsInput = new FileStream(filepath, FileMode.Open, FileAccess.Read))
+                        {
+                            using (FileStream fsEncrypted = new FileStream(encryptpath + filename + ".ee", FileMode.Create, FileAccess.Write))
+                            {
+                                ICryptoTransform encryptor = aes.CreateEncryptor();
+                                using (CryptoStream cryptostream = new CryptoStream(fsEncrypted, encryptor, CryptoStreamMode.Write))
+                                {
+                                    int bytesread;
+                                    byte[] buffer = new byte[16384];
+                                    while (true)
+                                    {
+                                        bytesread = fsInput.Read(buffer, 0, 16384);
+                                        if (bytesread == 0)
+                                            break;
+                                        cryptostream.Write(buffer, 0, bytesread);
+                                    }
+                                    ms.uploadFiles(filename, fi.Length, "MSEC", username, filename, fi.Extension, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV));
+                                    selectedFiles.Items.Clear();
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }*/
+
+
     }
 }
