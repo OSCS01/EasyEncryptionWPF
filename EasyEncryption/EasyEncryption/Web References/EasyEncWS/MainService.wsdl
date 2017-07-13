@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="getPubkey">
+        <s:complexType />
+      </s:element>
+      <s:element name="getPubkeyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getPubkeyResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Download">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="filename" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="share" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="owner" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DownloadResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DownloadResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="getLogs">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="owner" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="group" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getLogsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getLogsResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="retrieve">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="retrieveResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="retrieveResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="uploadFiles">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filename" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="size" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="group" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="owner" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="originalfilename" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="originalfileext" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="encryptedkey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="IV" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="uploadFilesResponse">
+        <s:complexType />
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="getPubkeySoapIn">
+    <wsdl:part name="parameters" element="tns:getPubkey" />
+  </wsdl:message>
+  <wsdl:message name="getPubkeySoapOut">
+    <wsdl:part name="parameters" element="tns:getPubkeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="DownloadSoapIn">
+    <wsdl:part name="parameters" element="tns:Download" />
+  </wsdl:message>
+  <wsdl:message name="DownloadSoapOut">
+    <wsdl:part name="parameters" element="tns:DownloadResponse" />
+  </wsdl:message>
+  <wsdl:message name="getLogsSoapIn">
+    <wsdl:part name="parameters" element="tns:getLogs" />
+  </wsdl:message>
+  <wsdl:message name="getLogsSoapOut">
+    <wsdl:part name="parameters" element="tns:getLogsResponse" />
+  </wsdl:message>
+  <wsdl:message name="retrieveSoapIn">
+    <wsdl:part name="parameters" element="tns:retrieve" />
+  </wsdl:message>
+  <wsdl:message name="retrieveSoapOut">
+    <wsdl:part name="parameters" element="tns:retrieveResponse" />
+  </wsdl:message>
+  <wsdl:message name="uploadFilesSoapIn">
+    <wsdl:part name="parameters" element="tns:uploadFiles" />
+  </wsdl:message>
+  <wsdl:message name="uploadFilesSoapOut">
+    <wsdl:part name="parameters" element="tns:uploadFilesResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MainServiceSoap">
+    <wsdl:operation name="getPubkey">
+      <wsdl:input message="tns:getPubkeySoapIn" />
+      <wsdl:output message="tns:getPubkeySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Download">
+      <wsdl:input message="tns:DownloadSoapIn" />
+      <wsdl:output message="tns:DownloadSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getLogs">
+      <wsdl:input message="tns:getLogsSoapIn" />
+      <wsdl:output message="tns:getLogsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="retrieve">
+      <wsdl:input message="tns:retrieveSoapIn" />
+      <wsdl:output message="tns:retrieveSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="uploadFiles">
+      <wsdl:input message="tns:uploadFilesSoapIn" />
+      <wsdl:output message="tns:uploadFilesSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MainServiceSoap" type="tns:MainServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getPubkey">
+      <soap:operation soapAction="http://tempuri.org/getPubkey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download">
+      <soap:operation soapAction="http://tempuri.org/Download" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLogs">
+      <soap:operation soapAction="http://tempuri.org/getLogs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="retrieve">
+      <soap:operation soapAction="http://tempuri.org/retrieve" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="uploadFiles">
+      <soap:operation soapAction="http://tempuri.org/uploadFiles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MainServiceSoap12" type="tns:MainServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getPubkey">
+      <soap12:operation soapAction="http://tempuri.org/getPubkey" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Download">
+      <soap12:operation soapAction="http://tempuri.org/Download" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLogs">
+      <soap12:operation soapAction="http://tempuri.org/getLogs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="retrieve">
+      <soap12:operation soapAction="http://tempuri.org/retrieve" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="uploadFiles">
+      <soap12:operation soapAction="http://tempuri.org/uploadFiles" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MainService">
+    <wsdl:port name="MainServiceSoap" binding="tns:MainServiceSoap">
+      <soap:address location="http://localhost:61349/MainService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MainServiceSoap12" binding="tns:MainServiceSoap12">
+      <soap12:address location="http://localhost:61349/MainService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

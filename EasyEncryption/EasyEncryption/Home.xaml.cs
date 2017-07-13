@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +24,22 @@ namespace EasyEncryption
         public Home()
         {
             InitializeComponent();
+        }
+
+        private void AddFiles_Click(object sender, RoutedEventArgs e)
+        {
+            var FD = new OpenFileDialog();
+            if (FD.ShowDialog() == DialogResult)
+            {
+                System.IO.FileInfo file = new System.IO.FileInfo(FD.FileName);
+                addItems(file);
+            }
+        }
+        private void addItems(FileInfo fi)
+        {
+            string[] row = { fi.Name, "" + fi.Length, fi.FullName };
+            ListViewItem lvi = new ListViewItem(row);
+            selectedFiles.Items.Add(lvi);
         }
     }
 }

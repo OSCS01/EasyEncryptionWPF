@@ -5,8 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyEncryption"
         mc:Ignorable="d"
-        Title="Home" Height="300" Width="300">
-    <Grid>
-        
+        Title="Home" Height="768" Width="1024">
+    <Grid Margin="0,-10,0.333,9.667">
+        <Button x:Name="AddFiles" Content="Files" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="40,65,0,0" Click="AddFiles_Click"/>
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="177,65,0,0"/>
+        <TabControl HorizontalAlignment="Left" Height="207" Margin="79,129,0,0" Width="358" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top">
+            <TabItem Header="Selected Files">
+                <ListView x:Name="selectedFiles" HorizontalAlignment="Left" Height="179" VerticalAlignment="Top" Width="353" Grid.RowSpan="3" Margin="0,0,-0.333,-0.333">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+            <TabItem Header="My Files">
+                <ListView x:Name="myFiles" HorizontalAlignment="Left" Height="179" VerticalAlignment="Top" Width="353" Grid.RowSpan="3" Margin="0,0,-0.333,-0.333">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
