@@ -15,7 +15,7 @@
         </Grid.ColumnDefinitions>
         <Button x:Name="AddFiles" Content="Files" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="13,70,0,0" Click="AddFiles_Click" Grid.Column="3"/>
         <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Margin="142,70,0,0" Grid.Column="3"/>
-        <TabControl HorizontalAlignment="Left" Height="256" Margin="13.5,129,0,0" Width="587" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Grid.Column="3">
+        <TabControl x:Name="tabControl1" HorizontalAlignment="Left" Height="256" Margin="13.5,129,0,0" Width="587" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Grid.Column="3" SelectionChanged="SelectedPage">
             <TabItem Header="Selected Files">
                 <ListView x:Name="selectedFiles" HorizontalAlignment="Left" Height="230" VerticalAlignment="Top" Width="582" Grid.RowSpan="3" Margin="0,0,-1,-0.333">
                     <ListView.View>
@@ -27,8 +27,8 @@
                     </ListView.View>
                 </ListView>
             </TabItem>
-            <TabItem Header="My Files">
-                <ListView x:Name="myFiles" HorizontalAlignment="Left" Height="230" VerticalAlignment="Top" Width="582" Grid.RowSpan="3" Margin="0,0,-1,-0.333">
+            <TabItem Header="My Files" HorizontalAlignment="Left" Width="59">
+                <ListView x:Name="myFiles" HorizontalAlignment="Left" Height="230" VerticalAlignment="Top" Width="582" Grid.RowSpan="3" Margin="0,0,-1,-0.333" SelectionMode="Multiple">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Filename" Width="75" DisplayMemberBinding="{Binding Originalfilename}"/>
@@ -41,5 +41,9 @@
             </TabItem>
         </TabControl>
         <Button x:Name="UploadBtn" Content="Upload" Grid.Column="3" HorizontalAlignment="Left" Margin="526.5,415,0,0" VerticalAlignment="Top" Width="74" Click="UploadBtn_Click"/>
+        <TextBox x:Name="textBox1" Grid.Column="3" HorizontalAlignment="Left" Height="78" Margin="318.5,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225"/>
+        <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="13.5,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <Button Content="Download" Grid.Column="3" HorizontalAlignment="Left" Margin="526.5,415,0,0" VerticalAlignment="Top" Width="74" Visibility="Hidden"  x:Name="downloadBtn" Click="downloadBtn_Click"/>
+        <Button Content="View Logs" Grid.Column="3" HorizontalAlignment="Left" Margin="437.5,415,0,0" VerticalAlignment="Top" Width="74" x:Name="ViewLogBtn" Visibility="Hidden" Click="ViewLogBtn_Click"/>
     </Grid>
 </Window>
