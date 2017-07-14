@@ -45,5 +45,6 @@
         <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="13.5,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Button Content="Download" Grid.Column="3" HorizontalAlignment="Left" Margin="526.5,415,0,0" VerticalAlignment="Top" Width="74" Visibility="Hidden"  x:Name="downloadBtn" Click="downloadBtn_Click"/>
         <Button Content="View Logs" Grid.Column="3" HorizontalAlignment="Left" Margin="437.5,415,0,0" VerticalAlignment="Top" Width="74" x:Name="ViewLogBtn" Visibility="Hidden" Click="ViewLogBtn_Click"/>
+        <Button x:Name="RefreshBtn" Content="Refresh" VerticalAlignment="Top" Width="53" Grid.Column="3" Margin="605,160,0,0" Height="25" Click="RefreshBtn_Click"/>
     </Grid>
 </Window>

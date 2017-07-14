@@ -121,7 +121,7 @@ namespace EasyEncryption
                                                     break;
                                                 cryptostream.Write(buffer, 0, bytesread);
                                             }
-                                            byte[] data = getFileData(filename + ".ee");
+                                            //byte[] data = getFileData(filename + ".ee");
                                             //ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV),data);
                                             ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV));
                                             selectedFiles.ItemsSource = null;
@@ -217,6 +217,11 @@ namespace EasyEncryption
                     }
                 }
             }
+        }
+
+        private void RefreshBtn_Click(object sender, RoutedEventArgs e)
+        {
+            getMyFiles(username);
         }
     }
 }
