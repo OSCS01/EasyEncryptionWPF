@@ -164,7 +164,7 @@ namespace EasyEncryption
 
         private void ViewLogBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            System.Windows.MessageBox.Show("hi");
         }
 
         private void downloadBtn_Click(object sender, RoutedEventArgs e)
