@@ -118,8 +118,10 @@ namespace EasyEncryption
                                                     break;
                                                 cryptostream.Write(buffer, 0, bytesread);
                                             }
-                                            ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV));
-                                            selectedFiles.ItemsSource = null;
+											byte[] data = getFileData(filename + ".ee");
+											//ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV),data);
+											ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV));
+											selectedFiles.ItemsSource = null;
                                         }
                                     }
                                 }
@@ -131,7 +133,15 @@ namespace EasyEncryption
         }
 
 
+		public byte[] getFileData(string filename)
+		{
+			FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
+			byte[] fileData = new byte[fs.Length];
+			fs.Read(fileData, 0, System.Convert.ToInt32(fs.Length));
+			fs.Close();
 
+			return fileData;
+		}
 
         /*
         foreach (ListViewItem item in selectedFiles.Items)
