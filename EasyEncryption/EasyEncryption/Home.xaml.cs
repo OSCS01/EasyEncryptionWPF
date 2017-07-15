@@ -121,9 +121,9 @@ namespace EasyEncryption
                                                     break;
                                                 cryptostream.Write(buffer, 0, bytesread);
                                             }
-                                            //byte[] data = getFileData(filename + ".ee");
-                                            //ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV),data);
-                                            ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV));
+                                            byte[] data = getFileData(filename + ".ee");
+                                            ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV),data);
+                                            //ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV));
                                             selectedFiles.ItemsSource = null;
                                         }
                                     }

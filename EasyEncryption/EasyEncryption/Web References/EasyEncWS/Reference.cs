@@ -23,7 +23,7 @@ namespace EasyEncryption.EasyEncWS {
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="MainServiceSoap", Namespace="http://tempuri.org/")]
@@ -218,7 +218,7 @@ namespace EasyEncryption.EasyEncWS {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/uploadFiles", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public void uploadFiles(string filename, long size, string group, string owner, string originalfilename, string originalfileext, string encryptedkey, string IV) {
+        public void uploadFiles(string filename, long size, string group, string owner, string originalfilename, string originalfileext, string encryptedkey, string IV, [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")] byte[] fileData) {
             this.Invoke("uploadFiles", new object[] {
                         filename,
                         size,
@@ -227,16 +227,17 @@ namespace EasyEncryption.EasyEncWS {
                         originalfilename,
                         originalfileext,
                         encryptedkey,
-                        IV});
+                        IV,
+                        fileData});
         }
         
         /// <remarks/>
-        public void uploadFilesAsync(string filename, long size, string group, string owner, string originalfilename, string originalfileext, string encryptedkey, string IV) {
-            this.uploadFilesAsync(filename, size, group, owner, originalfilename, originalfileext, encryptedkey, IV, null);
+        public void uploadFilesAsync(string filename, long size, string group, string owner, string originalfilename, string originalfileext, string encryptedkey, string IV, byte[] fileData) {
+            this.uploadFilesAsync(filename, size, group, owner, originalfilename, originalfileext, encryptedkey, IV, fileData, null);
         }
         
         /// <remarks/>
-        public void uploadFilesAsync(string filename, long size, string group, string owner, string originalfilename, string originalfileext, string encryptedkey, string IV, object userState) {
+        public void uploadFilesAsync(string filename, long size, string group, string owner, string originalfilename, string originalfileext, string encryptedkey, string IV, byte[] fileData, object userState) {
             if ((this.uploadFilesOperationCompleted == null)) {
                 this.uploadFilesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnuploadFilesOperationCompleted);
             }
@@ -248,7 +249,8 @@ namespace EasyEncryption.EasyEncWS {
                         originalfilename,
                         originalfileext,
                         encryptedkey,
-                        IV}, this.uploadFilesOperationCompleted, userState);
+                        IV,
+                        fileData}, this.uploadFilesOperationCompleted, userState);
         }
         
         private void OnuploadFilesOperationCompleted(object arg) {
@@ -278,11 +280,11 @@ namespace EasyEncryption.EasyEncWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void getPubkeyCompletedEventHandler(object sender, getPubkeyCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class getPubkeyCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -304,11 +306,11 @@ namespace EasyEncryption.EasyEncWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void DownloadCompletedEventHandler(object sender, DownloadCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class DownloadCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -330,11 +332,11 @@ namespace EasyEncryption.EasyEncWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void getLogsCompletedEventHandler(object sender, getLogsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class getLogsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -356,11 +358,11 @@ namespace EasyEncryption.EasyEncWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void retrieveCompletedEventHandler(object sender, retrieveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class retrieveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -382,7 +384,7 @@ namespace EasyEncryption.EasyEncWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void uploadFilesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
 }
 
