@@ -121,7 +121,8 @@ namespace EasyEncryption
                                                     break;
                                                 cryptostream.Write(buffer, 0, bytesread);
                                             }
-                                            byte[] data = getFileData(filename + ".ee");
+                                            cryptostream.Close();
+                                            byte[] data = getFileData(encryptpath + filename + ".ee");
                                             ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV),data);
                                             //ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV));
                                             selectedFiles.ItemsSource = null;
@@ -136,9 +137,9 @@ namespace EasyEncryption
         }
 
 
-        public byte[] getFileData(string filename)
+        public byte[] getFileData(string filepath)
         {
-            FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read);
             byte[] fileData = new byte[fs.Length];
             fs.Read(fileData, 0, System.Convert.ToInt32(fs.Length));
             fs.Close();
@@ -164,7 +165,8 @@ namespace EasyEncryption
 
         private void ViewLogBtn_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.MessageBox.Show("hi");
+            ViewLog vl = new ViewLog("test");
+            vl.Show();
         }
 
         private void downloadBtn_Click(object sender, RoutedEventArgs e)
@@ -191,6 +193,7 @@ namespace EasyEncryption
                                 string encfilepath = encryptpath + fileinfo[0] + ".ee";
                                 string decfilepath = decryptpath + fileinfo[2] + fileinfo[3];
 
+                                byte[] file = Convert.FromBase64String(fileinfo[5]);
 
                                 using (FileStream fsEncrypted = new FileStream(encfilepath, FileMode.Open, FileAccess.Read))
                                 {
@@ -199,8 +202,10 @@ namespace EasyEncryption
                                         ICryptoTransform decryptor = aes.CreateDecryptor();
                                         using (CryptoStream cryptostream = new CryptoStream(fsDecrypted, decryptor, CryptoStreamMode.Write))
                                         {
-                                            int bytesread;
-                                            byte[] buffer = new byte[16384];
+                                            //int bytesread;
+                                            //byte[] buffer = new byte[16384];
+                                            cryptostream.Write(file, 0, file.Length);
+                                            /*
                                             while (true)
                                             {
                                                 bytesread = fsEncrypted.Read(buffer, 0, 16384);
@@ -208,9 +213,10 @@ namespace EasyEncryption
                                                     break;
                                                 cryptostream.Write(buffer, 0, bytesread);
                                             }
+                                            */
                                         }
                                     }
-                                }
+                                } 
                             }
 
                         }
