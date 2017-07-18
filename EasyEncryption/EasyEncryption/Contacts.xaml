@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="Contacts" Height="300" Width="300">
     <Grid>
-        
+        <Label Content="Contacts" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="101,41,0,0" FontSize="20" FontWeight="Bold"/>
+        <DataGrid x:Name="ContactsGrid" HorizontalAlignment="Left" Height="160" VerticalAlignment="Top" Width="274" Margin="10,87,0,0" SelectionChanged="DataGrid_SelectionChanged"/>
+
     </Grid>
 </Window>
