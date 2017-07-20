@@ -165,7 +165,12 @@ namespace EasyEncryption
 
         private void ViewLogBtn_Click(object sender, RoutedEventArgs e)
         {
-            ViewLog vl = new ViewLog("test");
+            FileItem item = (FileItem) myFiles.SelectedItem;
+            List<string> fileinfo = new List<string>();
+            fileinfo.Add(item.Originalfilename);
+            fileinfo.Add(item.owner);
+            fileinfo.Add(item.shared);
+            ViewLog vl = new ViewLog(fileinfo);
             vl.Show();
         }
 

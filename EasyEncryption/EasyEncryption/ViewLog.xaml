@@ -7,7 +7,16 @@
         mc:Ignorable="d"
         Title="ViewLog" Height="376.944" Width="471.078">
     <Grid>
-        <TextBox x:Name="textBox1" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Margin="138,134,0,0"/>
-
+        <ListView x:Name="LogView" HorizontalAlignment="Left" Height="327" VerticalAlignment="Top" Width="445" Margin="10,10,0,0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Filename" DisplayMemberBinding="{Binding Originalfilename}"/>
+                    <GridViewColumn Header="Owner" DisplayMemberBinding="{Binding Owner}"/>
+                    <GridViewColumn Header="Downloaded By" DisplayMemberBinding="{Binding UserDownload}"/>
+                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}"/>
+                    <GridViewColumn Header="Group" DisplayMemberBinding="{Binding shared}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>

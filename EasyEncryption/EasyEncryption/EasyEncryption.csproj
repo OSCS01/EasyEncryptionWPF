@@ -58,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="FileItem.cs" />
+    <Compile Include="LogItem.cs" />
     <Compile Include="ViewLog.xaml.cs">
       <DependentUpon>ViewLog.xaml</DependentUpon>
     </Compile>
