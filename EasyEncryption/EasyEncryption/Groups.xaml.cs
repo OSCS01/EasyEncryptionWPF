@@ -28,5 +28,10 @@ namespace EasyEncryption
         {
 
         }
+
+        private void CreateGroup_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
