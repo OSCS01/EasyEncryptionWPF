@@ -234,6 +234,11 @@ namespace EasyEncryption
         {
             getMyFiles(username);
         }
+
+        private void myFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
 

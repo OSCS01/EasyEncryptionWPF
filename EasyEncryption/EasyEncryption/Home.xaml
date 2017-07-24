@@ -27,8 +27,8 @@
                     </ListView.View>
                 </ListView>
             </TabItem>
-            <TabItem Header="My Files" HorizontalAlignment="Left" Width="59">
-                <ListView x:Name="myFiles" HorizontalAlignment="Left" Height="230" VerticalAlignment="Top" Width="582" Grid.RowSpan="3" Margin="0,0,-1,-0.333" SelectionMode="Multiple">
+            <TabItem Header="My Files" HorizontalAlignment="Left" Width="59" Height="22" Margin="-2.2,-2,0,0" VerticalAlignment="Top">
+                <ListView x:Name="myFiles" HorizontalAlignment="Left" Height="230" VerticalAlignment="Top" Width="582" Grid.RowSpan="3" Margin="0,0,-1,-0.333" SelectionMode="Multiple" SelectionChanged="myFiles_SelectionChanged">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Filename" Width="75" DisplayMemberBinding="{Binding Originalfilename}"/>
