@@ -51,8 +51,10 @@ namespace EasyEncryption
         {
             using (SqlConnection con = new SqlConnection(constring))
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT GroupName FROM UsersGroups WHERE username =" + username))
+                //using (SqlCommand cmd = new SqlCommand("SELECT GroupName FROM UsersGroups WHERE username =" + username))
+                using (SqlCommand cmd = new SqlCommand("SELECT GroupName FROM UsersGroups WHERE username = @user"))
                 {
+                    cmd.Parameters.AddWithValue("@user", username);
                     cmd.Connection = con;
                     cmd.Connection.Open();
                     using (SqlDataAdapter sda = new SqlDataAdapter())
