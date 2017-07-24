@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ViewLog" Height="376.944" Width="471.078">
     <Grid>
-        <ListView x:Name="LogView" HorizontalAlignment="Left" Height="327" VerticalAlignment="Top" Width="445" Margin="10,10,0,0">
+        <ListView x:Name="LogView" HorizontalAlignment="Left" Height="327" VerticalAlignment="Top" Width="445" Margin="10,10,0,0" SelectionChanged="LogView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Filename" DisplayMemberBinding="{Binding Originalfilename}"/>

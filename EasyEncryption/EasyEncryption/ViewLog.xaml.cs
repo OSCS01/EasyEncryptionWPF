@@ -53,5 +53,10 @@ namespace EasyEncryption
             }
             LogView.ItemsSource = fil;
         }
+
+        private void LogView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

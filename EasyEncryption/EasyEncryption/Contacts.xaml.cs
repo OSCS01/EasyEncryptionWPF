@@ -25,8 +25,10 @@ namespace EasyEncryption
         public Contacts()
         {
             InitializeComponent();
-            LoadContacts();
+            //LoadContacts();
         }
+
+
 
         private void LoadContacts()
         {

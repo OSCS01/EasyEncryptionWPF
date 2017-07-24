@@ -62,6 +62,7 @@
     </Compile>
     <Compile Include="FileItem.cs" />
     <Compile Include="LogItem.cs" />
+    <Compile Include="UserItems.cs" />
     <Compile Include="ViewLog.xaml.cs">
       <DependentUpon>ViewLog.xaml</DependentUpon>
     </Compile>
