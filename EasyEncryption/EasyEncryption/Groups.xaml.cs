@@ -85,7 +85,8 @@ namespace EasyEncryption
 
         private void CreateGroup_Click(object sender, RoutedEventArgs e)
         {
-
+            CreateGroup cg = new CreateGroup();
+            cg.Show();
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
