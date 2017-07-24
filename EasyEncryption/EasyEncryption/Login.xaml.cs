@@ -21,6 +21,7 @@ namespace EasyEncryption
     /// </summary>
     public partial class Login : Window
     {
+        public static string username;
         const string constring = @"Data Source=CEPHAS\SQLEXPRESS;Initial Catalog = EasyEncryption;Integrated Security = True";
         public Login()
         {
@@ -39,14 +40,18 @@ namespace EasyEncryption
             sda.Fill(dt);
             if (dt.Rows[0][0].ToString() == "1")
             {
+                username = LoginField.Text;
                 this.Hide();
-                //Home hm = new Home();
-                //hm.Show();
+                Groups g = new Groups();
+                g.Show();
+                
             }
             else
             {
                 MessageBox.Show("Please check your username and password");
             }
+            
+            
 
         }
     }
