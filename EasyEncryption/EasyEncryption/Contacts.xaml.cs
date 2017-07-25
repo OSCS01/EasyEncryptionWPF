@@ -25,34 +25,62 @@ namespace EasyEncryption
         public Contacts()
         {
             InitializeComponent();
-            //LoadContacts();
+            getContacts();
         }
 
 
 
-        private void LoadContacts()
+        //private void LoadContacts()
+        //{
+        //    SqlConnection con = new SqlConnection(constring);
+        //    try
+        //    {
+        //        con.Open();
+        //        string query = "SELECT name FROM Users";
+        //        SqlCommand cmd = new SqlCommand(query, con);
+        //        cmd.ExecuteNonQuery();
+
+        //        SqlDataAdapter sda = new SqlDataAdapter(cmd);
+        //        DataTable dt = new DataTable("Users");
+        //        sda.Fill(dt);
+        //        ContactsGrid.ItemsSource = dt.DefaultView;
+        //        sda.Update(dt);
+
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //}
+        private void getContacts()
         {
-            SqlConnection con = new SqlConnection(constring);
-            try
+            using (SqlConnection con = new SqlConnection(constring))
             {
-                con.Open();
-                string query = "SELECT name FROM Users";
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.ExecuteNonQuery();
+                using (SqlCommand cmd = new SqlCommand("SELECT username, name FROM Users"))
+                {
+                    
+                    cmd.Connection = con;
+                    cmd.Connection.Open();
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        sda.SelectCommand = cmd;
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        List<UserItems> uilist = new List<UserItems>();
 
-                SqlDataAdapter sda = new SqlDataAdapter(cmd);
-                DataTable dt = new DataTable("Users");
-                sda.Fill(dt);
-                ContactsGrid.ItemsSource = dt.DefaultView;
-                sda.Update(dt);
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            UserItems ui = new UserItems();
+                            ui.name = dr["name"].ToString();
+                            ui.user = dr["username"].ToString();
+                            uilist.Add(ui);
+                        }
+                        myContacts.ItemsSource = uilist;
+                    }
+                }
 
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
             }
         }
-
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 

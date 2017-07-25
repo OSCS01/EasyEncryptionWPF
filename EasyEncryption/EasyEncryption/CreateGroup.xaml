@@ -7,9 +7,6 @@
         mc:Ignorable="d"
         Title="CreateGroup" Height="300" Width="300">
     <Grid>
-        <Label Content="Name" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="66,126,0,0"/>
-        <TextBox x:Name="newGroup" HorizontalAlignment="Left" Height="23" Margin="113,129,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="113,175,0,0" Click="Button_Click"/>
-
+        
     </Grid>
 </Window>

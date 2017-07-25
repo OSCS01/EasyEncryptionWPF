@@ -47,11 +47,11 @@ namespace EasyEncryption
         //        }
         //    }
         //}
+        
         private void getGroups(string username)
         {
             using (SqlConnection con = new SqlConnection(constring))
             {
-                //using (SqlCommand cmd = new SqlCommand("SELECT GroupName FROM UsersGroups WHERE username =" + username))
                 using (SqlCommand cmd = new SqlCommand("SELECT GroupName FROM UsersGroups WHERE username = @user"))
                 {
                     cmd.Parameters.AddWithValue("@user", username);
@@ -76,8 +76,6 @@ namespace EasyEncryption
 
             }
         }
-
-
         private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -85,8 +83,35 @@ namespace EasyEncryption
 
         private void CreateGroup_Click(object sender, RoutedEventArgs e)
         {
-            CreateGroup cg = new CreateGroup();
-            cg.Show();
+            using (SqlConnection con = new SqlConnection(constring))
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Groups WHERE GroupName like @newGroup", con))
+                {
+                    con.Open();
+                    cmd.Parameters.AddWithValue("@newGroup", newGroup.Text);
+                    int groupCount = (int)cmd.ExecuteScalar();
+                    if (groupCount > 0)
+                    {
+                        MessageBox.Show(newGroup.Text + " has already been taken!");
+                    }
+                    else
+                    {
+                        SqlCommand cmd1 = new SqlCommand("INSERT INTO Groups(GroupName) VALUES('" + newGroup.Text + "')", con);
+                        cmd1.ExecuteNonQuery();
+                        SqlCommand cmd2 = new SqlCommand("INSERT INTO UsersGroups(username, GroupName) VALUES('" + username + "' , '" + newGroup.Text + "')", con);
+                        cmd2.ExecuteNonQuery();
+                        MessageBox.Show("New Group: " + newGroup.Text + "!");
+                    }
+                }
+            }
+        }
+        private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var item = sender as ListViewItem;
+            if (item != null && item.IsSelected)
+            {
+               
+            }
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
