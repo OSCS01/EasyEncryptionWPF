@@ -22,6 +22,7 @@ namespace EasyEncryption
     /// </summary>
     public partial class Groups : Window
     {
+        public static string group;
         string username = Login.username;
         const string constring = @"Data Source=CEPHAS\SQLEXPRESS;Initial Catalog = EasyEncryption;Integrated Security = True";
         public Groups()
@@ -110,8 +111,11 @@ namespace EasyEncryption
             var item = sender as ListViewItem;
             if (item != null && item.IsSelected)
             {
-               
+                indivGroup ig = new indivGroup();
+                ig.Show();
+                group = item.ToString();
             }
+            
         }
 
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -19,7 +19,7 @@
                 <Style TargetType="ListViewItem">
                     <EventSetter Event="PreviewMouseDoubleClick" Handler="ListViewItem_PreviewMouseLeftButtonDown" />
                 </Style>
-                
+
             </ListView.ItemContainerStyle>
         </ListView>
         <TextBox x:Name="newGroup" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="42,241,0,0"/>
@@ -27,6 +27,6 @@
 
 
     </Grid>
-    
-    
+
+
 </Window>

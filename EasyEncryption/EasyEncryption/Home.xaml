@@ -14,7 +14,7 @@
             <ColumnDefinition Width="952*"/>
         </Grid.ColumnDefinitions>
         <Button x:Name="AddFiles" Content="Files" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="13,70,0,0" Click="AddFiles_Click" Grid.Column="3"/>
-        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Margin="142,70,0,0" Grid.Column="3"/>
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Margin="142,70,0,0" Grid.Column="3" Click="Button_Click"/>
         <TabControl x:Name="tabControl1" HorizontalAlignment="Left" Height="256" Margin="13.5,129,0,0" Width="587" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Grid.Column="3" SelectionChanged="SelectedPage">
             <TabItem Header="Selected Files">
                 <ListView x:Name="selectedFiles" HorizontalAlignment="Left" Height="230" VerticalAlignment="Top" Width="582" Grid.RowSpan="3" Margin="0,0,-1,-0.333">

@@ -64,6 +64,9 @@
       <DependentUpon>CreateGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="FileItem.cs" />
+    <Compile Include="indivGroup.xaml.cs">
+      <DependentUpon>indivGroup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LogItem.cs" />
     <Compile Include="UserItems.cs" />
     <Compile Include="ViewLog.xaml.cs">
@@ -91,6 +94,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Home.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="indivGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
