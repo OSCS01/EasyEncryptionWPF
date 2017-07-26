@@ -7,15 +7,22 @@
         mc:Ignorable="d"
         Title="indivGroup" Height="300" Width="300">
     <Grid>
-        <Label x:Name="groupTitle" Content="Admin" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,41,0,0" FontSize="20">
+        <Label x:Name="groupTitle" Content="Admin" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="110,10,114.6,0" FontSize="20">
         </Label>
-        <ListView x:Name="groupMembers"  Margin="10,83,9.6,64.4">
+        <ListView x:Name="groupMembers"  Margin="10,47,9.6,100.4">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Members" DisplayMemberBinding="{Binding name}"/>
                 </GridView>
             </ListView.View>
-            
+
         </ListView>
+        <Button x:Name="addMembers" Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="186,224,0,0" Click="addMembers_Click"/>
+        <DataGrid x:Name="addContacts" HorizontalAlignment="Left" Height="66" VerticalAlignment="Top" Width="158" Margin="10,194,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Contacts" Binding="{Binding name}"/>
+                <DataGridCheckBoxColumn Binding="{Binding checkbox}"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

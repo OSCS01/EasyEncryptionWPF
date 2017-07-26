@@ -18,6 +18,7 @@ namespace EasyEncryption
 {
     /// <summary>
     /// Interaction logic for Contacts.xaml
+    /// SHOW ID
     /// </summary>
     public partial class Contacts : Window
     {
@@ -52,13 +53,14 @@ namespace EasyEncryption
         //        MessageBox.Show(ex.Message);
         //    }
         //}
+
         private void getContacts()
         {
             using (SqlConnection con = new SqlConnection(constring))
             {
                 using (SqlCommand cmd = new SqlCommand("SELECT username, name FROM Users"))
                 {
-                    
+
                     cmd.Connection = con;
                     cmd.Connection.Open();
                     using (SqlDataAdapter sda = new SqlDataAdapter())
