@@ -16,6 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using nClam;
 
 namespace EasyEncryption
 {
@@ -79,6 +80,7 @@ namespace EasyEncryption
 
         private void UploadBtn_Click(object sender, RoutedEventArgs e)
         {
+            bool scanResult;
             if (selectedFiles.ItemsSource == null)
                 System.Windows.MessageBox.Show("No selected files!");
             else
@@ -122,8 +124,27 @@ namespace EasyEncryption
                                                 cryptostream.Write(buffer, 0, bytesread);
                                             }
                                             cryptostream.Close();
-                                            byte[] data = getFileData(encryptpath + filename + ".ee");
-                                            ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV),data);
+                                            try
+                                            {
+                                                scanResult = scanFile(encryptpath + filename + ".ee");
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                textBox1.Text = ex.ToString();
+                                                break;
+                                            }
+                                            if(scanResult == false)
+                                            {
+                                                byte[] data = getFileData(encryptpath + filename + ".ee");
+                                                ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV), data);
+                                            }
+                                            else
+                                            {
+                                                textBox1.Text = "The file you are uploading contains a virus!";
+                                                break;
+                                            }
+
+                                            //ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV),data);
                                             //ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV));
                                             selectedFiles.ItemsSource = null;
                                         }
@@ -145,6 +166,36 @@ namespace EasyEncryption
             fs.Close();
 
             return fileData;
+        }
+
+        //Don't know if this will work.
+        public Boolean scanFile(string filepath)
+        {
+            bool result = default(bool);
+            Task.Run(async () =>
+            {
+                var clam = new ClamClient("localhost", 3310);
+                var scanResult = await clam.ScanFileOnServerAsync(filepath);  //any file you would like!
+                
+
+                switch (scanResult.Result)
+                {
+                    case ClamScanResults.Clean:
+                        Console.WriteLine("The file is clean!");
+                        result = false;
+                        break;
+                    case ClamScanResults.VirusDetected:
+                        Console.WriteLine("Virus Found!");
+                        Console.WriteLine("Virus name: {0}", scanResult.InfectedFiles.First().VirusName);
+                        result = true;
+                        break;
+                    case ClamScanResults.Error:
+                        Console.WriteLine("Woah an error occured! Error: {0}", scanResult.RawResult);
+                        result = true;
+                        break;
+                }
+            }).Wait();
+            return result;
         }
 
         private void SelectedPage(object sender, SelectionChangedEventArgs e)
