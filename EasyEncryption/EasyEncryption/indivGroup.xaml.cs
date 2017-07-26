@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,11 +21,39 @@ namespace EasyEncryption
     /// </summary>
     public partial class indivGroup : Window
     {
+        const string constring = @"Data Source=CEPHAS\SQLEXPRESS;Initial Catalog = EasyEncryption;Integrated Security = True";
         string group = Groups.group;
         public indivGroup()
         {
             InitializeComponent();
             groupTitle.Content = group;
+        }
+        private void getGroupMem(string username)
+        {
+            using (SqlConnection con = new SqlConnection(constring))
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT name FROM Users WHERE GroupName = " + group))
+                {
+                    cmd.Connection = con;
+                    cmd.Connection.Open();
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        sda.SelectCommand = cmd;
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        List<UserItems> uilist = new List<UserItems>();
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            UserItems ui = new UserItems();
+                            ui.group = dr["name"].ToString();
+                            uilist.Add(ui);
+                        }
+                        groupMembers.ItemsSource = uilist;
+                    }
+                }
+
+            }
         }
     }
 }

@@ -102,6 +102,7 @@ namespace EasyEncryption
                         SqlCommand cmd2 = new SqlCommand("INSERT INTO UsersGroups(username, GroupName) VALUES('" + username + "' , '" + newGroup.Text + "')", con);
                         cmd2.ExecuteNonQuery();
                         MessageBox.Show("New Group: " + newGroup.Text + "!");
+                        myGroups.Items.Refresh();
                     }
                 }
             }

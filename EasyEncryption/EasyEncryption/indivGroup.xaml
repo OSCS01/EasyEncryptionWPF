@@ -7,7 +7,15 @@
         mc:Ignorable="d"
         Title="indivGroup" Height="300" Width="300">
     <Grid>
-        <Label x:Name="groupTitle" Content="" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,41,0,0" FontSize="20"/>
-
+        <Label x:Name="groupTitle" Content="Admin" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,41,0,0" FontSize="20">
+        </Label>
+        <ListView x:Name="groupMembers"  Margin="10,83,9.6,64.4">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Members" DisplayMemberBinding="{Binding name}"/>
+                </GridView>
+            </ListView.View>
+            
+        </ListView>
     </Grid>
 </Window>
