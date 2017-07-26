@@ -11,5 +11,6 @@ namespace EasyEncryption
         public string user { get; set; }
         public string group { get; set; }
         public string name { get; set; }
+        public bool checkbox { get; set; }
     }
 }

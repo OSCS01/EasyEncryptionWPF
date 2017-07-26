@@ -8,14 +8,22 @@
         Title="Contacts" Height="300" Width="300">
     <Grid>
         <Label Content="Your Contacts" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="75,37,0,0" FontSize="20" FontWeight="Bold"/>
-        <ListView x:Name="myContacts"  Margin="0,92,-0.4,21.4">
+        <ListView x:Name="myContacts"  Margin="10,101,9.6,38.4">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Contacts" DisplayMemberBinding="{Binding name}"/>
                     <GridViewColumn Header="ID" DisplayMemberBinding ="{Binding username}"/>
 
+                    <GridViewColumn>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Send"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
+
     </Grid>
 </Window>

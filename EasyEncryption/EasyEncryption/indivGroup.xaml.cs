@@ -18,6 +18,10 @@ namespace EasyEncryption
 {
     /// <summary>
     /// Interaction logic for indivGroup.xaml
+    /// Add checkbox
+    /// Display group name at label
+    /// Show users in the group
+    /// 
     /// </summary>
     public partial class indivGroup : Window
     {
@@ -54,6 +58,40 @@ namespace EasyEncryption
                 }
 
             }
+        }
+        private void displayContacts()
+        {
+            using (SqlConnection con = new SqlConnection(constring))
+            {
+                using (SqlCommand cmd = new SqlCommand("SELECT name FROM Users"))
+                {
+
+                    cmd.Connection = con;
+                    cmd.Connection.Open();
+                    using (SqlDataAdapter sda = new SqlDataAdapter())
+                    {
+                        sda.SelectCommand = cmd;
+                        DataTable dt = new DataTable();
+                        sda.Fill(dt);
+                        List<UserItems> uilist = new List<UserItems>();
+
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            UserItems ui = new UserItems();
+                            ui.name = dr["name"].ToString();
+                            uilist.Add(ui);
+                        }
+                        addContacts.ItemsSource = uilist;
+                    }
+                }
+
+            }
+
+        }
+
+        private void addMembers_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
