@@ -63,6 +63,7 @@
     <Compile Include="AddGroup.xaml.cs">
       <DependentUpon>AddGroup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ContactsItem.cs" />
     <Compile Include="CreateGroup.xaml.cs">
       <DependentUpon>CreateGroup.xaml</DependentUpon>
     </Compile>
@@ -167,7 +168,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

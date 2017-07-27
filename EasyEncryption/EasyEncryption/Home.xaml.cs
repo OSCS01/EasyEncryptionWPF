@@ -28,7 +28,7 @@ namespace EasyEncryption
 
         EasyEncWS.MainService ms = new EasyEncWS.MainService();
         string encryptpath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\EncryptedTest\\";
-        const string username = "Adam";
+        string username = "Adam";
 
         public Home()
         {
@@ -124,7 +124,8 @@ namespace EasyEncryption
                                                 cryptostream.Write(buffer, 0, bytesread);
                                             }
                                             cryptostream.Close();
-                                            try
+                                            byte[] data = getFileData(encryptpath + filename + ".ee");
+                                            /*try
                                             {
                                                 scanResult = scanFile(encryptpath + filename + ".ee");
                                             }
@@ -142,10 +143,9 @@ namespace EasyEncryption
                                             {
                                                 textBox1.Text = "The file you are uploading contains a virus!";
                                                 break;
-                                            }
-
-                                            //ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV),data);
-                                            //ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV));
+                                            }*/
+                                            
+                                            ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV),data);
                                             selectedFiles.ItemsSource = null;
                                         }
                                     }
@@ -293,7 +293,10 @@ namespace EasyEncryption
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            CspParameters csp = new CspParameters();
+            csp.KeyContainerName = "EEKeys";
+            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(2048,csp);
+            
         }
     }
 }

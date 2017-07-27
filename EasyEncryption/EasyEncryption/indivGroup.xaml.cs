@@ -31,6 +31,7 @@ namespace EasyEncryption
         {
             InitializeComponent();
             groupTitle.Content = group;
+            displayContacts();
         }
         private void getGroupMem(string username)
         {
@@ -65,7 +66,6 @@ namespace EasyEncryption
             {
                 using (SqlCommand cmd = new SqlCommand("SELECT name FROM Users"))
                 {
-
                     cmd.Connection = con;
                     cmd.Connection.Open();
                     using (SqlDataAdapter sda = new SqlDataAdapter())
@@ -73,24 +73,48 @@ namespace EasyEncryption
                         sda.SelectCommand = cmd;
                         DataTable dt = new DataTable();
                         sda.Fill(dt);
-                        List<UserItems> uilist = new List<UserItems>();
+                        
+                        List<ContactsItem> uilist = new List<ContactsItem>();
 
                         foreach (DataRow dr in dt.Rows)
                         {
-                            UserItems ui = new UserItems();
-                            ui.name = dr["name"].ToString();
-                            uilist.Add(ui);
+                            ContactsItem ci = new ContactsItem();
+                            ci.name = dr["name"].ToString();
+                            uilist.Add(ci);
                         }
-                        addContacts.ItemsSource = uilist;
+                        addContacts.ItemsSource = uilist; 
                     }
                 }
 
             }
 
         }
+       
 
         private void addMembers_Click(object sender, RoutedEventArgs e)
         {
+            List<ContactsItem> uilist = new List<ContactsItem>();
+            var SelectedList = new List<string>();
+                for(int i = 0; i<addContacts.Items.Count; i++)
+            {
+                var item = addContacts.Items[i];
+                var mycheckbox = addContacts.Columns[1].GetCellContent(item) as CheckBox;
+                if((bool)mycheckbox.IsChecked)
+                {
+                    SelectedList.Add(uilist[i].name);
+                    using (SqlConnection con = new SqlConnection(constring))
+                    {
+                        foreach (string name in SelectedList)
+                        {
+                            //using (var cmd = new SqlCommand("INSERT INTO UsersGroups (username,GroupName) VALUES(@username, @GroupName) WHERE username IN (SELECT u.username FROM Users u WHERE u.name = @name)")
+                            //{
+
+                            //}
+
+                        }
+                    }
+                }
+            }
 
         }
     }
