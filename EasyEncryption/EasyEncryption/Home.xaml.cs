@@ -16,7 +16,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using nClam;
+//using nClam;
 
 namespace EasyEncryption
 {
@@ -71,7 +71,7 @@ namespace EasyEncryption
                 FileItem fi = new FileItem();
                 fi.Originalfilename = dr["Filename"].ToString();
                 fi.Size = long.Parse(dr["Size"].ToString());
-                fi.shared = dr["SharedGroups"].ToString();
+                fi.shared = dr["sharedGroup"].ToString();
                 fi.owner = dr["Owner"].ToString();
                 fil.Add(fi);
             }
@@ -147,6 +147,7 @@ namespace EasyEncryption
                                             
                                             ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV),data);
                                             selectedFiles.ItemsSource = null;
+                                            getMyFiles(username);
                                         }
                                     }
                                 }
@@ -167,7 +168,7 @@ namespace EasyEncryption
 
             return fileData;
         }
-
+        /*
         //Don't know if this will work.
         public Boolean scanFile(string filepath)
         {
@@ -196,7 +197,7 @@ namespace EasyEncryption
                 }
             }).Wait();
             return result;
-        }
+        }*/
 
         private void SelectedPage(object sender, SelectionChangedEventArgs e)
         {
@@ -205,12 +206,14 @@ namespace EasyEncryption
                 downloadBtn.Visibility = Visibility.Hidden;
                 UploadBtn.Visibility = Visibility.Visible;
                 ViewLogBtn.Visibility = Visibility.Hidden;
+                DeleteBtn.Visibility = Visibility.Hidden;
             }
             else
             {
                 downloadBtn.Visibility = Visibility.Visible;
                 UploadBtn.Visibility = Visibility.Hidden;
                 ViewLogBtn.Visibility = Visibility.Visible;
+                DeleteBtn.Visibility = Visibility.Visible;
             }
         }
 
@@ -294,9 +297,23 @@ namespace EasyEncryption
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             CspParameters csp = new CspParameters();
-            csp.KeyContainerName = "EEKeys";
+            csp.KeyContainerName = "MyEEKeys";
             RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(2048,csp);
+            textBox1.Text = rsa.ToXmlString(false);
+
             
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (FileItem item in myFiles.SelectedItems)
+            {
+                if (item.owner == username)
+                    ms.DeleteFile(item.Originalfilename, item.owner, item.shared, username);
+                else
+                    System.Windows.Forms.MessageBox.Show("You are not the owner of this file!");
+            }
+            getMyFiles(username);
         }
     }
 }

@@ -50,6 +50,19 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="DeleteFile">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="owner" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="group" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="user" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteFileResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="retrieve">
         <s:complexType>
           <s:sequence>
@@ -102,6 +115,12 @@
   <wsdl:message name="getLogsSoapOut">
     <wsdl:part name="parameters" element="tns:getLogsResponse" />
   </wsdl:message>
+  <wsdl:message name="DeleteFileSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteFile" />
+  </wsdl:message>
+  <wsdl:message name="DeleteFileSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteFileResponse" />
+  </wsdl:message>
   <wsdl:message name="retrieveSoapIn">
     <wsdl:part name="parameters" element="tns:retrieve" />
   </wsdl:message>
@@ -126,6 +145,10 @@
     <wsdl:operation name="getLogs">
       <wsdl:input message="tns:getLogsSoapIn" />
       <wsdl:output message="tns:getLogsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFile">
+      <wsdl:input message="tns:DeleteFileSoapIn" />
+      <wsdl:output message="tns:DeleteFileSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="retrieve">
       <wsdl:input message="tns:retrieveSoapIn" />
@@ -158,6 +181,15 @@
     </wsdl:operation>
     <wsdl:operation name="getLogs">
       <soap:operation soapAction="http://tempuri.org/getLogs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFile">
+      <soap:operation soapAction="http://tempuri.org/DeleteFile" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -206,6 +238,15 @@
     </wsdl:operation>
     <wsdl:operation name="getLogs">
       <soap12:operation soapAction="http://tempuri.org/getLogs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFile">
+      <soap12:operation soapAction="http://tempuri.org/DeleteFile" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -35,6 +35,8 @@ namespace EasyEncryption.EasyEncWS {
         
         private System.Threading.SendOrPostCallback getLogsOperationCompleted;
         
+        private System.Threading.SendOrPostCallback DeleteFileOperationCompleted;
+        
         private System.Threading.SendOrPostCallback retrieveOperationCompleted;
         
         private System.Threading.SendOrPostCallback uploadFilesOperationCompleted;
@@ -85,6 +87,9 @@ namespace EasyEncryption.EasyEncWS {
         
         /// <remarks/>
         public event getLogsCompletedEventHandler getLogsCompleted;
+        
+        /// <remarks/>
+        public event DeleteFileCompletedEventHandler DeleteFileCompleted;
         
         /// <remarks/>
         public event retrieveCompletedEventHandler retrieveCompleted;
@@ -184,6 +189,40 @@ namespace EasyEncryption.EasyEncWS {
             if ((this.getLogsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.getLogsCompleted(this, new getLogsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/DeleteFile", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void DeleteFile(string name, string owner, string group, string user) {
+            this.Invoke("DeleteFile", new object[] {
+                        name,
+                        owner,
+                        group,
+                        user});
+        }
+        
+        /// <remarks/>
+        public void DeleteFileAsync(string name, string owner, string group, string user) {
+            this.DeleteFileAsync(name, owner, group, user, null);
+        }
+        
+        /// <remarks/>
+        public void DeleteFileAsync(string name, string owner, string group, string user, object userState) {
+            if ((this.DeleteFileOperationCompleted == null)) {
+                this.DeleteFileOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDeleteFileOperationCompleted);
+            }
+            this.InvokeAsync("DeleteFile", new object[] {
+                        name,
+                        owner,
+                        group,
+                        user}, this.DeleteFileOperationCompleted, userState);
+        }
+        
+        private void OnDeleteFileOperationCompleted(object arg) {
+            if ((this.DeleteFileCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DeleteFileCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -356,6 +395,10 @@ namespace EasyEncryption.EasyEncWS {
             }
         }
     }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    public delegate void DeleteFileCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
