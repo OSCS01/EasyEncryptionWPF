@@ -98,7 +98,7 @@ namespace EasyEncryption
                 for(int i = 0; i<addContacts.Items.Count; i++)
             {
                 var item = addContacts.Items[i];
-                var mycheckbox = addContacts.Columns[1].GetCellContent(item) as CheckBox;
+                var mycheckbox = addContacts.Columns[i].GetCellContent(item) as CheckBox;
                 if((bool)mycheckbox.IsChecked)
                 {
                     SelectedList.Add(uilist[i].name);
@@ -106,14 +106,13 @@ namespace EasyEncryption
                     {
                         foreach (string name in SelectedList)
                         {
-                            //using (var cmd = new SqlCommand("INSERT INTO UsersGroups (username,GroupName) VALUES(@username, @GroupName) WHERE username IN (SELECT u.username FROM Users u WHERE u.name = @name)")
-                            //{
-
-                            //}
+                            var cmd = new SqlCommand("INSERT INTO UsersGroups (username,GroupName) SELECT username, '" + group + "' FROM Users WHERE name = '" + name + "'");
+                           cmd.ExecuteNonQuery();
 
                         }
                     }
                 }
+                
             }
 
         }
