@@ -21,7 +21,7 @@
         <DataGrid x:Name="addContacts" HorizontalAlignment="Left" Height="105" VerticalAlignment="Top" Width="212" Margin="10,249,0,0" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Contacts" Binding="{Binding name}" IsReadOnly="true"/>
-                <DataGridCheckBoxColumn Binding="{Binding checkbox}"/>
+                <DataGridCheckBoxColumn x:Name="mycheckbox" Binding="{Binding checkbox}"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
