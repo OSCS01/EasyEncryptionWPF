@@ -41,6 +41,8 @@ namespace EasyEncryption.EasyEncWS {
         
         private System.Threading.SendOrPostCallback uploadFilesOperationCompleted;
         
+        private System.Threading.SendOrPostCallback retrieveNotificationOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -96,6 +98,9 @@ namespace EasyEncryption.EasyEncWS {
         
         /// <remarks/>
         public event uploadFilesCompletedEventHandler uploadFilesCompleted;
+        
+        /// <remarks/>
+        public event retrieveNotificationCompletedEventHandler retrieveNotificationCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/getPubkey", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -300,6 +305,35 @@ namespace EasyEncryption.EasyEncWS {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/retrieveNotification", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public int retrieveNotification(string username) {
+            object[] results = this.Invoke("retrieveNotification", new object[] {
+                        username});
+            return ((int)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void retrieveNotificationAsync(string username) {
+            this.retrieveNotificationAsync(username, null);
+        }
+        
+        /// <remarks/>
+        public void retrieveNotificationAsync(string username, object userState) {
+            if ((this.retrieveNotificationOperationCompleted == null)) {
+                this.retrieveNotificationOperationCompleted = new System.Threading.SendOrPostCallback(this.OnretrieveNotificationOperationCompleted);
+            }
+            this.InvokeAsync("retrieveNotification", new object[] {
+                        username}, this.retrieveNotificationOperationCompleted, userState);
+        }
+        
+        private void OnretrieveNotificationOperationCompleted(object arg) {
+            if ((this.retrieveNotificationCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.retrieveNotificationCompleted(this, new retrieveNotificationCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -429,6 +463,32 @@ namespace EasyEncryption.EasyEncWS {
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
     public delegate void uploadFilesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    public delegate void retrieveNotificationCompletedEventHandler(object sender, retrieveNotificationCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class retrieveNotificationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal retrieveNotificationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public int Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
 }
 
 #pragma warning restore 1591

@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyEncryption"
         mc:Ignorable="d"
-        Title="ViewLog" Height="376.944" Width="471.078">
+        Title="ViewLog" Height="505.243" Width="770.088">
     <Grid>
-        <ListView x:Name="LogView" HorizontalAlignment="Left" Height="327" VerticalAlignment="Top" Width="445" Margin="10,10,0,0" SelectionChanged="LogView_SelectionChanged">
+        <ListView x:Name="LogView" HorizontalAlignment="Left" Height="458" VerticalAlignment="Top" Width="745" Margin="10,10,0,0" SelectionChanged="LogView_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Filename" DisplayMemberBinding="{Binding Originalfilename}"/>

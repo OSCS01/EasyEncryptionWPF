@@ -48,5 +48,7 @@
         <Button Content="View Logs" Grid.Column="4" HorizontalAlignment="Left" Margin="329,415,0,0" VerticalAlignment="Top" Width="74" x:Name="ViewLogBtn" Visibility="Hidden" Click="ViewLogBtn_Click"/>
         <Button x:Name="RefreshBtn" Content="Refresh" VerticalAlignment="Top" Width="53" Grid.Column="4" Margin="497,160,0,0" Height="25" Click="RefreshBtn_Click"/>
         <Button x:Name="DeleteBtn" Click="DeleteBtn_Click" Content="Delete" Grid.Column="4" HorizontalAlignment="Left" Margin="249.5,415,0,0" VerticalAlignment="Top" Width="74" Visibility="Hidden"/>
+        <Label x:Name="NotificationLbl" Grid.ColumnSpan="5" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" Width="705" Margin="0,10,0,0" Height="23" Background="#FFFCFFC8"/>
+        <Button x:Name="CloseBtn" Click="CloseBtn_Click" Content="Close" Grid.Column="4" HorizontalAlignment="Left" Margin="497.5,13,0,0" VerticalAlignment="Top" Width="32"/>
     </Grid>
 </Window>

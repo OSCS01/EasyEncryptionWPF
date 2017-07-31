@@ -34,6 +34,7 @@ namespace EasyEncryption
         {
             InitializeComponent();
             getMyFiles(username);
+            getNotification(username);
         }
 
         private void AddFiles_Click(object sender, RoutedEventArgs e)
@@ -78,6 +79,18 @@ namespace EasyEncryption
             myFiles.ItemsSource = fil;
         }
 
+        private void getNotification(string username)
+        {
+            int i = ms.retrieveNotification(username);
+            if (i > 0)
+                NotificationLbl.Content = "You have " + i + " files not downloaded!";
+            else
+            {
+                NotificationLbl.Visibility = Visibility.Hidden;
+                CloseBtn.Visibility = Visibility.Hidden;
+            }
+
+        }
         private void UploadBtn_Click(object sender, RoutedEventArgs e)
         {
             bool scanResult;
@@ -306,66 +319,24 @@ namespace EasyEncryption
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            foreach (FileItem item in myFiles.SelectedItems)
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
             {
-                if (item.owner == username)
-                    ms.DeleteFile(item.Originalfilename, item.owner, item.shared, username);
-                else
-                    System.Windows.Forms.MessageBox.Show("You are not the owner of this file!");
+                foreach (FileItem item in myFiles.SelectedItems)
+                {
+                    if (item.owner == username)
+                        ms.DeleteFile(item.Originalfilename, item.owner, item.shared, username);
+                    else
+                        System.Windows.Forms.MessageBox.Show("You are not the owner of this file!");
+                }
+                getMyFiles(username);
             }
-            getMyFiles(username);
+        }
+
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NotificationLbl.Visibility = Visibility.Hidden;
+            CloseBtn.Visibility = Visibility.Hidden;
         }
     }
 }
-
-
-
-/*
-foreach (ListViewItem item in selectedFiles.Items)
-{
-    string filepath = item.SubItems[2].Text;
-    FileInfo fi = new FileInfo(filepath);
-    string fileext = fi.Extension;
-    string filename = fi.Name.Substring(0, fi.Name.Length - fileext.Length);
-    using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
-    {
-        string serverpub = ms.getPubkey();
-        rsa.FromXmlString(serverpub);
-        using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
-        {
-            byte[] key = new byte[32];
-            byte[] IV = new byte[16];
-            rng.GetBytes(key);
-            rng.GetBytes(IV);
-            using (RijndaelManaged aes = new RijndaelManaged())
-            {
-                aes.Mode = CipherMode.CBC;
-                aes.IV = IV;
-                aes.Key = key;
-                using (FileStream fsInput = new FileStream(filepath, FileMode.Open, FileAccess.Read))
-                {
-                    using (FileStream fsEncrypted = new FileStream(encryptpath + filename + ".ee", FileMode.Create, FileAccess.Write))
-                    {
-                        ICryptoTransform encryptor = aes.CreateEncryptor();
-                        using (CryptoStream cryptostream = new CryptoStream(fsEncrypted, encryptor, CryptoStreamMode.Write))
-                        {
-                            int bytesread;
-                            byte[] buffer = new byte[16384];
-                            while (true)
-                            {
-                                bytesread = fsInput.Read(buffer, 0, 16384);
-                                if (bytesread == 0)
-                                    break;
-                                cryptostream.Write(buffer, 0, bytesread);
-                            }
-                            ms.uploadFiles(filename, fi.Length, "MSEC", username, filename, fi.Extension, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV));
-                            selectedFiles.Items.Clear();
-                        }
-                    }
-                }
-            }
-        }
-
-    }*/
-
-
