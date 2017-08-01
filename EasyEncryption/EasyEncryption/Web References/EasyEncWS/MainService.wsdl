@@ -50,6 +50,20 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="getGroups">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getGroupsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="getGroupsResult" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="DeleteFile">
         <s:complexType>
           <s:sequence>
@@ -129,6 +143,12 @@
   <wsdl:message name="getLogsSoapOut">
     <wsdl:part name="parameters" element="tns:getLogsResponse" />
   </wsdl:message>
+  <wsdl:message name="getGroupsSoapIn">
+    <wsdl:part name="parameters" element="tns:getGroups" />
+  </wsdl:message>
+  <wsdl:message name="getGroupsSoapOut">
+    <wsdl:part name="parameters" element="tns:getGroupsResponse" />
+  </wsdl:message>
   <wsdl:message name="DeleteFileSoapIn">
     <wsdl:part name="parameters" element="tns:DeleteFile" />
   </wsdl:message>
@@ -165,6 +185,10 @@
     <wsdl:operation name="getLogs">
       <wsdl:input message="tns:getLogsSoapIn" />
       <wsdl:output message="tns:getLogsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getGroups">
+      <wsdl:input message="tns:getGroupsSoapIn" />
+      <wsdl:output message="tns:getGroupsSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="DeleteFile">
       <wsdl:input message="tns:DeleteFileSoapIn" />
@@ -205,6 +229,15 @@
     </wsdl:operation>
     <wsdl:operation name="getLogs">
       <soap:operation soapAction="http://tempuri.org/getLogs" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGroups">
+      <soap:operation soapAction="http://tempuri.org/getGroups" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -271,6 +304,15 @@
     </wsdl:operation>
     <wsdl:operation name="getLogs">
       <soap12:operation soapAction="http://tempuri.org/getLogs" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getGroups">
+      <soap12:operation soapAction="http://tempuri.org/getGroups" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

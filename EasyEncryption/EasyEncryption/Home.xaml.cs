@@ -34,8 +34,8 @@ namespace EasyEncryption
         public Home()
         {
             InitializeComponent();
-            //getMyFiles(username);
-            //getNotification(username);
+            getMyFiles(username);
+            getNotification(username);
         }
 
         private void AddFiles_Click(object sender, RoutedEventArgs e)
@@ -94,82 +94,21 @@ namespace EasyEncryption
         }
         private void UploadBtn_Click(object sender, RoutedEventArgs e)
         {
-            bool scanResult;
+
             if (selectedFiles.ItemsSource == null)
                 System.Windows.MessageBox.Show("No selected files!");
             else
             {
                 List<FileItem> fil = (List<FileItem>)selectedFiles.ItemsSource;
+                List<FileInfo> fileinfo = new List<FileInfo>();
                 foreach (FileItem fi in fil)
                 {
-                    FileInfo fileinfo = new FileInfo(fi.path);
-                    string fileext = fileinfo.Extension;
-                    string filename = fileinfo.Name.Substring(0, fileinfo.Name.Length - fileext.Length);
-                    
-
-                    using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
-                    {
-                        string serverpub = ms.getPubkey();
-                        rsa.FromXmlString(serverpub);
-                        using (RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider())
-                        {
-                            byte[] key = new byte[32];
-                            byte[] IV = new byte[16];
-                            rng.GetBytes(key);
-                            rng.GetBytes(IV);
-                            using (RijndaelManaged aes = new RijndaelManaged())
-                            {
-                                aes.Mode = CipherMode.CBC;
-                                aes.IV = IV;
-                                aes.Key = key;
-                                using (FileStream fsInput = new FileStream(fi.path, FileMode.Open, FileAccess.Read))
-                                {
-                                    using (FileStream fsEncrypted = new FileStream(encryptpath + filename + ".ee", FileMode.Create, FileAccess.Write))
-                                    {
-                                        ICryptoTransform encryptor = aes.CreateEncryptor();
-                                        using (CryptoStream cryptostream = new CryptoStream(fsEncrypted, encryptor, CryptoStreamMode.Write))
-                                        {
-                                            int bytesread;
-                                            byte[] buffer = new byte[16384];
-                                            while (true)
-                                            {
-                                                bytesread = fsInput.Read(buffer, 0, 16384);
-                                                if (bytesread == 0)
-                                                    break;
-                                                cryptostream.Write(buffer, 0, bytesread);
-                                            }
-                                            cryptostream.Close();
-                                            byte[] data = getFileData(encryptpath + filename + ".ee");
-                                            /*try
-                                            {
-                                                scanResult = scanFile(encryptpath + filename + ".ee");
-                                            }
-                                            catch (Exception ex)
-                                            {
-                                                textBox1.Text = ex.ToString();
-                                                break;
-                                            }
-                                            if(scanResult == false)
-                                            {
-                                                byte[] data = getFileData(encryptpath + filename + ".ee");
-                                                ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV), data);
-                                            }
-                                            else
-                                            {
-                                                textBox1.Text = "The file you are uploading contains a virus!";
-                                                break;
-                                            }*/
-                                            
-                                            ms.uploadFiles(filename, fi.Size, "MSEC", username, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV),data);
-                                            selectedFiles.ItemsSource = null;
-                                            getMyFiles(username);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    FileInfo file = new FileInfo(fi.path);
+                    fileinfo.Add(file);
                 }
+                GroupSelect gs = new GroupSelect(username, fileinfo);
+                gs.Show();
+                selectedFiles.ItemsSource = null;
             }
         }
 
@@ -187,7 +126,7 @@ namespace EasyEncryption
         //Don't know if this will work.
         public string scanFile(string filepath)
         {
-            string result = "fak";
+            string result = "result";
             Task.Run(async () =>
             {
                 var clam = new ClamClient("localhost", 3310);
@@ -203,11 +142,11 @@ namespace EasyEncryption
                     case ClamScanResults.VirusDetected:
                         Console.WriteLine("Virus Found!");
                         Console.WriteLine("Virus name: {0}", scanResult.InfectedFiles.First().VirusName);
-                        result = "VIRUUUSS";
+                        result = "virus";
                         break;
                     case ClamScanResults.Error:
                         Console.WriteLine("Woah an error occured! Error: {0}", scanResult.RawResult);
-                        result = scanResult.RawResult;
+                        result = "error";
                         break;
                 }
             }).Wait();
@@ -309,7 +248,6 @@ namespace EasyEncryption
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            textBox1.Text = scanFile(@"C:\Users\peter_000\Desktop\test.bat").ToString();
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)

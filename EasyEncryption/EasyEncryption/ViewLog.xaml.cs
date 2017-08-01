@@ -47,7 +47,7 @@ namespace EasyEncryption
                 fi.Originalfilename = dr["Originalfilename"].ToString();
                 fi.Owner = dr["Owner"].ToString();
                 fi.shared = dr["sharedGroup"].ToString();
-                fi.Date = dr["Time"].ToString();
+                fi.Date = dr["Date"].ToString();
                 fi.UserDownload = dr["UserDownload"].ToString();
                 fil.Add(fi);
             }

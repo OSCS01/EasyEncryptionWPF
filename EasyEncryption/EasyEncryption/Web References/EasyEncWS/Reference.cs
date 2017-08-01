@@ -23,7 +23,7 @@ namespace EasyEncryption.EasyEncWS {
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="MainServiceSoap", Namespace="http://tempuri.org/")]
@@ -34,6 +34,8 @@ namespace EasyEncryption.EasyEncWS {
         private System.Threading.SendOrPostCallback DownloadOperationCompleted;
         
         private System.Threading.SendOrPostCallback getLogsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback getGroupsOperationCompleted;
         
         private System.Threading.SendOrPostCallback DeleteFileOperationCompleted;
         
@@ -89,6 +91,9 @@ namespace EasyEncryption.EasyEncWS {
         
         /// <remarks/>
         public event getLogsCompletedEventHandler getLogsCompleted;
+        
+        /// <remarks/>
+        public event getGroupsCompletedEventHandler getGroupsCompleted;
         
         /// <remarks/>
         public event DeleteFileCompletedEventHandler DeleteFileCompleted;
@@ -194,6 +199,35 @@ namespace EasyEncryption.EasyEncWS {
             if ((this.getLogsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.getLogsCompleted(this, new getLogsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/getGroups", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string[] getGroups(string username) {
+            object[] results = this.Invoke("getGroups", new object[] {
+                        username});
+            return ((string[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void getGroupsAsync(string username) {
+            this.getGroupsAsync(username, null);
+        }
+        
+        /// <remarks/>
+        public void getGroupsAsync(string username, object userState) {
+            if ((this.getGroupsOperationCompleted == null)) {
+                this.getGroupsOperationCompleted = new System.Threading.SendOrPostCallback(this.OngetGroupsOperationCompleted);
+            }
+            this.InvokeAsync("getGroups", new object[] {
+                        username}, this.getGroupsOperationCompleted, userState);
+        }
+        
+        private void OngetGroupsOperationCompleted(object arg) {
+            if ((this.getGroupsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.getGroupsCompleted(this, new getGroupsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -353,11 +387,11 @@ namespace EasyEncryption.EasyEncWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void getPubkeyCompletedEventHandler(object sender, getPubkeyCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class getPubkeyCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -379,11 +413,11 @@ namespace EasyEncryption.EasyEncWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void DownloadCompletedEventHandler(object sender, DownloadCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class DownloadCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -405,11 +439,11 @@ namespace EasyEncryption.EasyEncWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void getLogsCompletedEventHandler(object sender, getLogsCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class getLogsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -431,15 +465,41 @@ namespace EasyEncryption.EasyEncWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void getGroupsCompletedEventHandler(object sender, getGroupsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class getGroupsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal getGroupsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void DeleteFileCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void retrieveCompletedEventHandler(object sender, retrieveCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class retrieveCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -461,15 +521,15 @@ namespace EasyEncryption.EasyEncWS {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void uploadFilesCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void retrieveNotificationCompletedEventHandler(object sender, retrieveNotificationCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class retrieveNotificationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {

@@ -71,6 +71,9 @@
       <DependentUpon>CreateGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="FileItem.cs" />
+    <Compile Include="GroupSelect.xaml.cs">
+      <DependentUpon>GroupSelect.xaml</DependentUpon>
+    </Compile>
     <Compile Include="indivGroup.xaml.cs">
       <DependentUpon>indivGroup.xaml</DependentUpon>
     </Compile>
@@ -97,6 +100,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Groups.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GroupSelect.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

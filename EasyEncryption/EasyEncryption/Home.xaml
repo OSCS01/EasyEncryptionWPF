@@ -42,7 +42,6 @@
             </TabItem>
         </TabControl>
         <Button x:Name="UploadBtn" Content="Upload" Grid.Column="4" HorizontalAlignment="Left" Margin="418,415,0,0" VerticalAlignment="Top" Width="74" Click="UploadBtn_Click"/>
-        <TextBox x:Name="textBox1" Grid.Column="4" HorizontalAlignment="Left" Height="78" Margin="210,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="225"/>
         <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="13.5,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Button Content="Download" Grid.Column="4" HorizontalAlignment="Left" Margin="418,415,0,0" VerticalAlignment="Top" Width="74" Visibility="Hidden"  x:Name="downloadBtn" Click="downloadBtn_Click"/>
         <Button Content="View Logs" Grid.Column="4" HorizontalAlignment="Left" Margin="329,415,0,0" VerticalAlignment="Top" Width="74" x:Name="ViewLogBtn" Visibility="Hidden" Click="ViewLogBtn_Click"/>
