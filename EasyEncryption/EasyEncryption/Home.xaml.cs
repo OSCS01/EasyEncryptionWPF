@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-//using nClam;
 
 namespace EasyEncryption
 {
@@ -33,8 +33,8 @@ namespace EasyEncryption
         public Home()
         {
             InitializeComponent();
-            getMyFiles(username);
-            getNotification(username);
+            //getMyFiles(username);
+            //getNotification(username);
         }
 
         private void AddFiles_Click(object sender, RoutedEventArgs e)
@@ -104,6 +104,7 @@ namespace EasyEncryption
                     FileInfo fileinfo = new FileInfo(fi.path);
                     string fileext = fileinfo.Extension;
                     string filename = fileinfo.Name.Substring(0, fileinfo.Name.Length - fileext.Length);
+                    
 
                     using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
                     {
@@ -212,6 +213,8 @@ namespace EasyEncryption
             return result;
         }*/
 
+
+
         private void SelectedPage(object sender, SelectionChangedEventArgs e)
         {
             if (tabControl1.SelectedIndex == 0)
@@ -302,18 +305,9 @@ namespace EasyEncryption
             getMyFiles(username);
         }
 
-        private void myFiles_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            CspParameters csp = new CspParameters();
-            csp.KeyContainerName = "MyEEKeys";
-            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(2048,csp);
-            textBox1.Text = rsa.ToXmlString(false);
-
             
         }
 
