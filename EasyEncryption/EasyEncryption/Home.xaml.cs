@@ -17,6 +17,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using nClam;
 
 namespace EasyEncryption
 {
@@ -182,11 +183,11 @@ namespace EasyEncryption
 
             return fileData;
         }
-        /*
+        
         //Don't know if this will work.
-        public Boolean scanFile(string filepath)
+        public string scanFile(string filepath)
         {
-            bool result = default(bool);
+            string result = "fak";
             Task.Run(async () =>
             {
                 var clam = new ClamClient("localhost", 3310);
@@ -197,23 +198,23 @@ namespace EasyEncryption
                 {
                     case ClamScanResults.Clean:
                         Console.WriteLine("The file is clean!");
-                        result = false;
+                        result = "clean";
                         break;
                     case ClamScanResults.VirusDetected:
                         Console.WriteLine("Virus Found!");
                         Console.WriteLine("Virus name: {0}", scanResult.InfectedFiles.First().VirusName);
-                        result = true;
+                        result = "VIRUUUSS";
                         break;
                     case ClamScanResults.Error:
                         Console.WriteLine("Woah an error occured! Error: {0}", scanResult.RawResult);
-                        result = true;
+                        result = scanResult.RawResult;
                         break;
                 }
             }).Wait();
             return result;
-        }*/
+        }
 
-
+        
 
         private void SelectedPage(object sender, SelectionChangedEventArgs e)
         {
@@ -308,7 +309,7 @@ namespace EasyEncryption
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            textBox1.Text = scanFile(@"C:\Users\peter_000\Desktop\test.bat").ToString();
         }
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)

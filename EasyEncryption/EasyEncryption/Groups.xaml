@@ -24,6 +24,7 @@
         </ListView>
         <TextBox x:Name="newGroup" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="42,241,0,0"/>
         <TextBlock HorizontalAlignment="Left" Margin="107,243,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <DataGrid HorizontalAlignment="Left" Height="16" Margin="282,588,-19.4,-333.6" VerticalAlignment="Top" Width="31"/>
 
 
     </Grid>

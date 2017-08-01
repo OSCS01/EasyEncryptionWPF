@@ -109,13 +109,14 @@ namespace EasyEncryption
         }
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var item = sender as ListViewItem;
-            if (item != null && item.IsSelected)
-            {
-                indivGroup ig = new indivGroup();
+            UserItems ui = myGroups.SelectedItem as UserItems;
+            string groupname = ui.group;
+            //if (item != null && item.IsSelected)
+            //{
+                indivGroup ig = new indivGroup(groupname);
                 ig.Show();
-                group = item.ToString();
-            }
+            //    group = item.ToString();
+            //}
             
         }
 

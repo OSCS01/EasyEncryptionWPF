@@ -26,19 +26,23 @@ namespace EasyEncryption
     public partial class indivGroup : Window
     {
         const string constring = @"Data Source=CEPHAS\SQLEXPRESS;Initial Catalog = EasyEncryption;Integrated Security = True";
-        string group = Groups.group;
-        public indivGroup()
+        string username = Login.username;
+        string group;
+        public indivGroup(string groupname)
         {
             InitializeComponent();
-            groupTitle.Content = group;
+            groupTitle.Content = groupname;
+            group = groupname;
+            getGroupMem(username);
             displayContacts();
         }
         private void getGroupMem(string username)
         {
             using (SqlConnection con = new SqlConnection(constring))
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT name FROM Users WHERE GroupName = " + group))
+                using (SqlCommand cmd = new SqlCommand("SELECT username FROM UsersGroups WHERE GroupName = @group"))
                 {
+                    cmd.Parameters.AddWithValue("@group", group);
                     cmd.Connection = con;
                     cmd.Connection.Open();
                     using (SqlDataAdapter sda = new SqlDataAdapter())
@@ -51,7 +55,7 @@ namespace EasyEncryption
                         foreach (DataRow dr in dt.Rows)
                         {
                             UserItems ui = new UserItems();
-                            ui.group = dr["name"].ToString();
+                            ui.name = dr["username"].ToString();
                             uilist.Add(ui);
                         }
                         groupMembers.ItemsSource = uilist;
@@ -89,19 +93,42 @@ namespace EasyEncryption
             }
 
         }
-       
+
 
         private void addMembers_Click(object sender, RoutedEventArgs e)
         {
+            List<ContactsItem> uilist = (List<ContactsItem>)addContacts.ItemsSource;
+            List<string> selectedNames = new List<string>();
+            foreach (ContactsItem ci in uilist)
+            {
+                if (ci.checkbox)
+                {
+                    selectedNames.Add(ci.name);
+                }
+            }
+
+            foreach (string s in selectedNames)
+            {
+                using (SqlConnection con = new SqlConnection(constring))
+                {
+                    SqlCommand cmd = new SqlCommand("INSERT INTO UsersGroups (username,GroupName) SELECT username, '" + group + "' FROM Users WHERE name = '" + s + "'");
+                    cmd.Connection = con;
+                    cmd.Connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+            getGroupMem(username);
+            /*
             List<ContactsItem> uilist = new List<ContactsItem>();
             var SelectedList = new List<string>();
                 for(int i = 0; i<addContacts.Items.Count; i++)
             {
                 var item = addContacts.Items[i];
-                var mycheckbox = addContacts.Columns[i].GetCellContent(item) as CheckBox;
+                var mycheckbox = addContacts.Columns[1].GetCellContent(item) as CheckBox;
                 if((bool)mycheckbox.IsChecked)
                 {
-                    SelectedList.Add(uilist[i].name);
+                    SelectedList.Add(item.);
                     using (SqlConnection con = new SqlConnection(constring))
                     {
                         foreach (string name in SelectedList)
@@ -113,7 +140,7 @@ namespace EasyEncryption
                     }
                 }
                 
-            }
+            }*/
 
         }
     }
