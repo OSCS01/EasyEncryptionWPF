@@ -204,5 +204,50 @@
   <ItemGroup>
     <None Include="Web References\EasyEncWS\MainService.disco" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\after-effects.png" />
+    <Resource Include="Images\ai.png" />
+    <Resource Include="Images\audition.png" />
+    <Resource Include="Images\avi.png" />
+    <Resource Include="Images\bridge.png" />
+    <Resource Include="Images\contacts.png" />
+    <Resource Include="Images\css.png" />
+    <Resource Include="Images\csv.png" />
+    <Resource Include="Images\dbf.png" />
+    <Resource Include="Images\defaultfile.png" />
+    <Resource Include="Images\doc.png" />
+    <Resource Include="Images\dreamweaver.png" />
+    <Resource Include="Images\dwg.png" />
+    <Resource Include="Images\exe.png" />
+    <Resource Include="Images\files.png" />
+    <Resource Include="Images\fireworks.png" />
+    <Resource Include="Images\fla.png" />
+    <Resource Include="Images\flash.png" />
+    <Resource Include="Images\groups.png" />
+    <Resource Include="Images\html.png" />
+    <Resource Include="Images\illustrator.png" />
+    <Resource Include="Images\indesign.png" />
+    <Resource Include="Images\iso.png" />
+    <Resource Include="Images\javascript.png" />
+    <Resource Include="Images\jpg.png" />
+    <Resource Include="Images\json-file.png" />
+    <Resource Include="Images\mp3.png" />
+    <Resource Include="Images\mp4.png" />
+    <Resource Include="Images\pdf.png" />
+    <Resource Include="Images\photoshop.png" />
+    <Resource Include="Images\png.png" />
+    <Resource Include="Images\ppt.png" />
+    <Resource Include="Images\prelude.png" />
+    <Resource Include="Images\premiere.png" />
+    <Resource Include="Images\psd.png" />
+    <Resource Include="Images\rtf.png" />
+    <Resource Include="Images\search.png" />
+    <Resource Include="Images\svg.png" />
+    <Resource Include="Images\txt.png" />
+    <Resource Include="Images\xls.png" />
+    <Resource Include="Images\xml.png" />
+    <Resource Include="Images\zip-1.png" />
+    <Resource Include="Images\zip.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

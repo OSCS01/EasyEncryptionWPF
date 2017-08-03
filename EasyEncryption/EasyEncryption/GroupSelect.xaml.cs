@@ -37,10 +37,17 @@ namespace EasyEncryption
 
         public void addGroups()
         {
-            string[] group = ms.getGroups(user);
-            foreach (string s in group)
+            try
             {
-                grouplist.Items.Add(s);
+                string[] group = ms.getGroups(user);
+                foreach (string s in group)
+                {
+                    grouplist.Items.Add(s);
+                }
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("Cannot connect to server", "Error");
             }
         }
         public byte[] getFileData(string filepath)
@@ -128,7 +135,9 @@ namespace EasyEncryption
                                             cryptostream.Close();
                                             byte[] data = getFileData(encryptpath + filename + ".ee");
 
-                                            ms.uploadFiles(filename, fileinfo.Length, grouplist.SelectedItem as string, user, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV), data);
+                                            bool result = ms.uploadFiles(filename, fileinfo.Length, grouplist.SelectedItem as string, user, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV), data);
+                                            if (!result)
+                                                MessageBox.Show("Same file already exists!", "Error");
                                         }
                                     }
                                 }

@@ -34,8 +34,15 @@ namespace EasyEncryption
         public Home()
         {
             InitializeComponent();
-            getMyFiles(username);
-            getNotification(username);
+            try
+            {
+                getMyFiles(username);
+                getNotification(username);
+            }
+            catch(Exception e)
+            {
+                System.Windows.Forms.MessageBox.Show("Cannot connect to server", "Error");
+            }
         }
 
         private void AddFiles_Click(object sender, RoutedEventArgs e)
@@ -122,38 +129,7 @@ namespace EasyEncryption
 
             return fileData;
         }
-        
-        //Don't know if this will work.
-        public string scanFile(string filepath)
-        {
-            string result = "result";
-            Task.Run(async () =>
-            {
-                var clam = new ClamClient("localhost", 3310);
-                var scanResult = await clam.ScanFileOnServerAsync(filepath);  //any file you would like!
                 
-
-                switch (scanResult.Result)
-                {
-                    case ClamScanResults.Clean:
-                        Console.WriteLine("The file is clean!");
-                        result = "clean";
-                        break;
-                    case ClamScanResults.VirusDetected:
-                        Console.WriteLine("Virus Found!");
-                        Console.WriteLine("Virus name: {0}", scanResult.InfectedFiles.First().VirusName);
-                        result = "virus";
-                        break;
-                    case ClamScanResults.Error:
-                        Console.WriteLine("Woah an error occured! Error: {0}", scanResult.RawResult);
-                        result = "error";
-                        break;
-                }
-            }).Wait();
-            return result;
-        }
-
-        
 
         private void SelectedPage(object sender, SelectionChangedEventArgs e)
         {
