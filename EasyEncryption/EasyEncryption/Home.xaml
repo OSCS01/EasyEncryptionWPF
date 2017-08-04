@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyEncryption"
         mc:Ignorable="d"
-        Title="Home" Height="472" Width="710.5">
+        Title="Home" Height="476.647" Width="751.659">
     <Grid Margin="0,-10,0.333,9.667">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -21,33 +21,35 @@
                 <ListView x:Name="selectedFiles" HorizontalAlignment="Left" Height="230" VerticalAlignment="Top" Width="582" Grid.RowSpan="3" Margin="0,0,-1,-0.333">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Filename" DisplayMemberBinding="{Binding Originalfilename}"/>
-                            <GridViewColumn Header="Size" DisplayMemberBinding="{Binding Size}"/>
-                            <GridViewColumn Header="Path" DisplayMemberBinding="{Binding path}"/>
+                            <GridViewColumn Header="Filename" Width="100" DisplayMemberBinding="{Binding Originalfilename}"/>
+                            <GridViewColumn Header="Size" Width="100"  DisplayMemberBinding="{Binding Size}"/>
+                            <GridViewColumn Header="Path" Width="300"  DisplayMemberBinding="{Binding path}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
             </TabItem>
             <TabItem Header="My Files" HorizontalAlignment="Left" Width="59" Height="22" Margin="-2.2,-2,0,0" VerticalAlignment="Top">
-                <ListView x:Name="myFiles" HorizontalAlignment="Left" Height="230" VerticalAlignment="Top" Width="582" Grid.RowSpan="3" Margin="0,0,-1,-0.333" SelectionMode="Multiple" >
+                <ListView GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" x:Name="myFiles" HorizontalAlignment="Left" Height="230" VerticalAlignment="Top" Width="582" Grid.RowSpan="3" Margin="0,0,-1,-0.333" SelectionMode="Multiple" >
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Filename" Width="75" DisplayMemberBinding="{Binding Originalfilename}"/>
-                            <GridViewColumn Header="Size" Width="50" DisplayMemberBinding="{Binding Size}"/>
+                            <GridViewColumn Header="Filename" Width="150" DisplayMemberBinding="{Binding Originalfilename}"/>
+                            <GridViewColumn Header="Size" Width="60" DisplayMemberBinding="{Binding Size}"/>
                             <GridViewColumn Header="Group" Width="60" DisplayMemberBinding="{Binding shared}"/>
                             <GridViewColumn Header="Owner" Width="60" DisplayMemberBinding="{Binding owner}"/>
+                            <GridViewColumn Header="Downloaded" Width="75" DisplayMemberBinding="{Binding isDownloaded}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
             </TabItem>
         </TabControl>
-        <Button x:Name="UploadBtn" Content="Upload" Grid.Column="4" HorizontalAlignment="Left" Margin="418,415,0,0" VerticalAlignment="Top" Width="74" Click="UploadBtn_Click"/>
+        <Button x:Name="UploadBtn" Content="Upload" Grid.Column="4" HorizontalAlignment="Left" Margin="411.5,415,0,0" VerticalAlignment="Top" Width="74" Click="UploadBtn_Click"/>
         <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="13.5,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Button Content="Download" Grid.Column="4" HorizontalAlignment="Left" Margin="418,415,0,0" VerticalAlignment="Top" Width="74" Visibility="Hidden"  x:Name="downloadBtn" Click="downloadBtn_Click"/>
         <Button Content="View Logs" Grid.Column="4" HorizontalAlignment="Left" Margin="329,415,0,0" VerticalAlignment="Top" Width="74" x:Name="ViewLogBtn" Visibility="Hidden" Click="ViewLogBtn_Click"/>
-        <Button x:Name="RefreshBtn" Content="Refresh" VerticalAlignment="Top" Width="53" Grid.Column="4" Margin="497,160,0,0" Height="25" Click="RefreshBtn_Click"/>
+        <Button x:Name="RefreshBtn" Visibility="Hidden" Content="Refresh" VerticalAlignment="Top" Width="53" Grid.Column="4" Margin="497,160,0,0" Height="25" Click="RefreshBtn_Click"/>
         <Button x:Name="DeleteBtn" Click="DeleteBtn_Click" Content="Delete" Grid.Column="4" HorizontalAlignment="Left" Margin="249.5,415,0,0" VerticalAlignment="Top" Width="74" Visibility="Hidden"/>
-        <Label x:Name="NotificationLbl" Grid.ColumnSpan="5" Content="Error" HorizontalAlignment="Left" VerticalAlignment="Top" Width="705" Margin="0,10,0,0" Height="23" Background="#FFFCFFC8"/>
-        <Button x:Name="CloseBtn" Click="CloseBtn_Click" Content="Close" Grid.Column="4" HorizontalAlignment="Left" Margin="497.5,13,0,0" VerticalAlignment="Top" Width="32"/>
+        <Label x:Name="NotificationLbl" Grid.ColumnSpan="5" Content="Error" HorizontalAlignment="Left" VerticalAlignment="Top" Width="746" Margin="0,10,0,0" Height="23" Background="#FFFCFFC8"/>
+        <Button x:Name="CloseBtn" Click="CloseBtn_Click" Content="Close" Grid.Column="4" HorizontalAlignment="Left" Margin="538.5,10,0,0" VerticalAlignment="Top" Width="32" Height="23"/>
+        <Button x:Name="ClearBtn" Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Width="53" Grid.Column="4" Margin="512.5,163,0,0" Click="ClearBtn_Click" Height="22"/>
     </Grid>
 </Window>

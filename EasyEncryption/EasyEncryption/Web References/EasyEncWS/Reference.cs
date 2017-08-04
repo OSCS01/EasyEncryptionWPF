@@ -45,6 +45,8 @@ namespace EasyEncryption.EasyEncWS {
         
         private System.Threading.SendOrPostCallback retrieveNotificationOperationCompleted;
         
+        private System.Threading.SendOrPostCallback getIsDownloadedOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -106,6 +108,9 @@ namespace EasyEncryption.EasyEncWS {
         
         /// <remarks/>
         public event retrieveNotificationCompletedEventHandler retrieveNotificationCompleted;
+        
+        /// <remarks/>
+        public event getIsDownloadedCompletedEventHandler getIsDownloadedCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/getPubkey", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -296,9 +301,8 @@ namespace EasyEncryption.EasyEncWS {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/uploadFiles", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public bool uploadFiles(string filename, long size, string group, string owner, string originalfilename, string originalfileext, string encryptedkey, string IV, [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")] byte[] fileData) {
+        public bool uploadFiles(long size, string group, string owner, string originalfilename, string originalfileext, string encryptedkey, string IV, [System.Xml.Serialization.XmlElementAttribute(DataType="base64Binary")] byte[] fileData) {
             object[] results = this.Invoke("uploadFiles", new object[] {
-                        filename,
                         size,
                         group,
                         owner,
@@ -311,17 +315,16 @@ namespace EasyEncryption.EasyEncWS {
         }
         
         /// <remarks/>
-        public void uploadFilesAsync(string filename, long size, string group, string owner, string originalfilename, string originalfileext, string encryptedkey, string IV, byte[] fileData) {
-            this.uploadFilesAsync(filename, size, group, owner, originalfilename, originalfileext, encryptedkey, IV, fileData, null);
+        public void uploadFilesAsync(long size, string group, string owner, string originalfilename, string originalfileext, string encryptedkey, string IV, byte[] fileData) {
+            this.uploadFilesAsync(size, group, owner, originalfilename, originalfileext, encryptedkey, IV, fileData, null);
         }
         
         /// <remarks/>
-        public void uploadFilesAsync(string filename, long size, string group, string owner, string originalfilename, string originalfileext, string encryptedkey, string IV, byte[] fileData, object userState) {
+        public void uploadFilesAsync(long size, string group, string owner, string originalfilename, string originalfileext, string encryptedkey, string IV, byte[] fileData, object userState) {
             if ((this.uploadFilesOperationCompleted == null)) {
                 this.uploadFilesOperationCompleted = new System.Threading.SendOrPostCallback(this.OnuploadFilesOperationCompleted);
             }
             this.InvokeAsync("uploadFiles", new object[] {
-                        filename,
                         size,
                         group,
                         owner,
@@ -365,6 +368,39 @@ namespace EasyEncryption.EasyEncWS {
             if ((this.retrieveNotificationCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.retrieveNotificationCompleted(this, new retrieveNotificationCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/getIsDownloaded", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool getIsDownloaded(string filename, string username, string group) {
+            object[] results = this.Invoke("getIsDownloaded", new object[] {
+                        filename,
+                        username,
+                        group});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void getIsDownloadedAsync(string filename, string username, string group) {
+            this.getIsDownloadedAsync(filename, username, group, null);
+        }
+        
+        /// <remarks/>
+        public void getIsDownloadedAsync(string filename, string username, string group, object userState) {
+            if ((this.getIsDownloadedOperationCompleted == null)) {
+                this.getIsDownloadedOperationCompleted = new System.Threading.SendOrPostCallback(this.OngetIsDownloadedOperationCompleted);
+            }
+            this.InvokeAsync("getIsDownloaded", new object[] {
+                        filename,
+                        username,
+                        group}, this.getIsDownloadedOperationCompleted, userState);
+        }
+        
+        private void OngetIsDownloadedOperationCompleted(object arg) {
+            if ((this.getIsDownloadedCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.getIsDownloadedCompleted(this, new getIsDownloadedCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -569,6 +605,32 @@ namespace EasyEncryption.EasyEncWS {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    public delegate void getIsDownloadedCompletedEventHandler(object sender, getIsDownloadedCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1586.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class getIsDownloadedCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal getIsDownloadedCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
             }
         }
     }

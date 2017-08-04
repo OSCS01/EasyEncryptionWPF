@@ -94,7 +94,6 @@
       <s:element name="uploadFiles">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="filename" type="s:string" />
             <s:element minOccurs="1" maxOccurs="1" name="size" type="s:long" />
             <s:element minOccurs="0" maxOccurs="1" name="group" type="s:string" />
             <s:element minOccurs="0" maxOccurs="1" name="owner" type="s:string" />
@@ -124,6 +123,22 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="1" maxOccurs="1" name="retrieveNotificationResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getIsDownloaded">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="filename" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="username" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="group" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="getIsDownloadedResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="getIsDownloadedResult" type="s:boolean" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -177,6 +192,12 @@
   <wsdl:message name="retrieveNotificationSoapOut">
     <wsdl:part name="parameters" element="tns:retrieveNotificationResponse" />
   </wsdl:message>
+  <wsdl:message name="getIsDownloadedSoapIn">
+    <wsdl:part name="parameters" element="tns:getIsDownloaded" />
+  </wsdl:message>
+  <wsdl:message name="getIsDownloadedSoapOut">
+    <wsdl:part name="parameters" element="tns:getIsDownloadedResponse" />
+  </wsdl:message>
   <wsdl:portType name="MainServiceSoap">
     <wsdl:operation name="getPubkey">
       <wsdl:input message="tns:getPubkeySoapIn" />
@@ -209,6 +230,10 @@
     <wsdl:operation name="retrieveNotification">
       <wsdl:input message="tns:retrieveNotificationSoapIn" />
       <wsdl:output message="tns:retrieveNotificationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="getIsDownloaded">
+      <wsdl:input message="tns:getIsDownloadedSoapIn" />
+      <wsdl:output message="tns:getIsDownloadedSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="MainServiceSoap" type="tns:MainServiceSoap">
@@ -285,6 +310,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="getIsDownloaded">
+      <soap:operation soapAction="http://tempuri.org/getIsDownloaded" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="MainServiceSoap12" type="tns:MainServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -353,6 +387,15 @@
     </wsdl:operation>
     <wsdl:operation name="retrieveNotification">
       <soap12:operation soapAction="http://tempuri.org/retrieveNotification" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getIsDownloaded">
+      <soap12:operation soapAction="http://tempuri.org/getIsDownloaded" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

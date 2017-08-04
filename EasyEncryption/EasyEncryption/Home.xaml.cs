@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using nClam;
+using System.ComponentModel;
 
 namespace EasyEncryption
 {
@@ -30,6 +31,8 @@ namespace EasyEncryption
         EasyEncWS.MainService ms = new EasyEncWS.MainService();
         string encryptpath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\EncryptedTest\\";
         string username = "Adam";
+        GridViewColumnHeader _lastHeaderClicked = null;
+        ListSortDirection _lastDirection = ListSortDirection.Descending;
 
         public Home()
         {
@@ -38,10 +41,47 @@ namespace EasyEncryption
             {
                 getMyFiles(username);
                 getNotification(username);
+                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(myFiles.ItemsSource);
+                view.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 System.Windows.Forms.MessageBox.Show("Cannot connect to server", "Error");
+            }
+        }
+
+        private void Sort(string sortBy, ListSortDirection direction)
+        {
+            ICollectionView dataView =
+              CollectionViewSource.GetDefaultView(myFiles.ItemsSource);
+
+            dataView.SortDescriptions.Clear();
+            SortDescription sd = new SortDescription(sortBy, direction);
+            dataView.SortDescriptions.Add(sd);
+            dataView.Refresh();
+        }
+
+        void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
+        {
+            GridViewColumnHeader headerClicked = e.OriginalSource as GridViewColumnHeader;
+            ListSortDirection direction;
+
+            if (headerClicked != null)
+            {
+                if (headerClicked.Role != GridViewColumnHeaderRole.Padding)
+                {
+                    if (_lastDirection == ListSortDirection.Ascending)
+                        direction = ListSortDirection.Descending;
+                    else
+                        direction = ListSortDirection.Ascending;
+
+                    string header = headerClicked.Column.Header as string;
+                    Sort(header, direction);
+
+                    _lastHeaderClicked = headerClicked;
+                    _lastDirection = direction;
+                }
             }
         }
 
@@ -82,6 +122,7 @@ namespace EasyEncryption
                 fi.Size = long.Parse(dr["Size"].ToString());
                 fi.shared = dr["sharedGroup"].ToString();
                 fi.owner = dr["Owner"].ToString();
+                fi.isDownloaded = ms.getIsDownloaded(fi.Originalfilename, username, fi.shared);
                 fil.Add(fi);
             }
             myFiles.ItemsSource = fil;
@@ -129,7 +170,7 @@ namespace EasyEncryption
 
             return fileData;
         }
-                
+
 
         private void SelectedPage(object sender, SelectionChangedEventArgs e)
         {
@@ -139,6 +180,8 @@ namespace EasyEncryption
                 UploadBtn.Visibility = Visibility.Visible;
                 ViewLogBtn.Visibility = Visibility.Hidden;
                 DeleteBtn.Visibility = Visibility.Hidden;
+                RefreshBtn.Visibility = Visibility.Hidden;
+                ClearBtn.Visibility = Visibility.Visible;
             }
             else
             {
@@ -146,12 +189,14 @@ namespace EasyEncryption
                 UploadBtn.Visibility = Visibility.Hidden;
                 ViewLogBtn.Visibility = Visibility.Visible;
                 DeleteBtn.Visibility = Visibility.Visible;
+                RefreshBtn.Visibility = Visibility.Visible;
+                ClearBtn.Visibility = Visibility.Hidden;
             }
         }
 
         private void ViewLogBtn_Click(object sender, RoutedEventArgs e)
         {
-            FileItem item = (FileItem) myFiles.SelectedItem;
+            FileItem item = (FileItem)myFiles.SelectedItem;
             List<string> fileinfo = new List<string>();
             fileinfo.Add(item.Originalfilename);
             fileinfo.Add(item.owner);
@@ -174,43 +219,30 @@ namespace EasyEncryption
                         foreach (FileItem item in myFiles.SelectedItems)
                         {
                             string[] fileinfo = ms.Download(username, item.Originalfilename, item.shared, item.owner);
-                            byte[] deckey = rsa.Decrypt(Convert.FromBase64String(fileinfo[4]), false);
+                            byte[] deckey = rsa.Decrypt(Convert.FromBase64String(fileinfo[3]), false);
                             using (RijndaelManaged aes = new RijndaelManaged())
                             {
                                 aes.Key = deckey;
-                                aes.IV = Convert.FromBase64String(fileinfo[1]);
+                                aes.IV = Convert.FromBase64String(fileinfo[0]);
                                 aes.Mode = CipherMode.CBC;
 
-                                string encfilepath = encryptpath + fileinfo[0] + ".ee";
-                                string decfilepath = decryptpath + fileinfo[2] + fileinfo[3];
+                                string filename = fileinfo[1] + fileinfo[2];
 
-                                byte[] file = Convert.FromBase64String(fileinfo[5]);
+                                string decfilepath = decryptpath + filename;
 
-                                using (FileStream fsEncrypted = new FileStream(encfilepath, FileMode.Open, FileAccess.Read))
+                                byte[] file = Convert.FromBase64String(fileinfo[4]);
+
+                                using (FileStream fsDecrypted = new FileStream(decfilepath, FileMode.Create, FileAccess.Write))
                                 {
-                                    using (FileStream fsDecrypted = new FileStream(decfilepath, FileMode.Create, FileAccess.Write))
+                                    ICryptoTransform decryptor = aes.CreateDecryptor();
+                                    using (CryptoStream cryptostream = new CryptoStream(fsDecrypted, decryptor, CryptoStreamMode.Write))
                                     {
-                                        ICryptoTransform decryptor = aes.CreateDecryptor();
-                                        using (CryptoStream cryptostream = new CryptoStream(fsDecrypted, decryptor, CryptoStreamMode.Write))
-                                        {
-                                            //int bytesread;
-                                            //byte[] buffer = new byte[16384];
-                                            cryptostream.Write(file, 0, file.Length);
-                                            /*
-                                            while (true)
-                                            {
-                                                bytesread = fsEncrypted.Read(buffer, 0, 16384);
-                                                if (bytesread == 0)
-                                                    break;
-                                                cryptostream.Write(buffer, 0, bytesread);
-                                            }
-                                            */
-                                        }
+                                        cryptostream.Write(file, 0, file.Length);
                                     }
-                                } 
+                                }
                             }
-
                         }
+                        getMyFiles(username);
                     }
                 }
             }
@@ -248,6 +280,11 @@ namespace EasyEncryption
         {
             Groups group = new Groups();
             group.Show();
+        }
+
+        private void ClearBtn_Click(object sender, RoutedEventArgs e)
+        {
+            selectedFiles.ItemsSource = null;
         }
     }
 }

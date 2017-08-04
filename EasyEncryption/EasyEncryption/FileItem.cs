@@ -8,7 +8,6 @@ namespace EasyEncryption
 {
     class FileItem
     {
-        public string hashedFilename { get; set; }
         public string EncKey { get; set; }
         public string IV { get; set; }
         public string Originalfilename { get; set; }
@@ -17,6 +16,8 @@ namespace EasyEncryption
         public string owner { get; set; }
         public string shared { get; set; }
         public string path { get; set; }
+
+        public bool isDownloaded { get; set; }
 
         public FileItem()
         {

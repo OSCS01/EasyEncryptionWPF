@@ -94,13 +94,12 @@ namespace EasyEncryption
         {
             foreach (FileInfo fileinfo in fil)
             {
-                string scanResult = scanFile(fileinfo.FullName);
+                //string scanResult = scanFile(fileinfo.FullName);
+                string scanResult = "clean";
                 if (scanResult.Equals("clean"))
                 {
                     string fileext = fileinfo.Extension;
                     string filename = fileinfo.Name.Substring(0, fileinfo.Name.Length - fileext.Length);
-
-
                     using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
                     {
                         string serverpub = ms.getPubkey();
@@ -135,9 +134,10 @@ namespace EasyEncryption
                                             cryptostream.Close();
                                             byte[] data = getFileData(encryptpath + filename + ".ee");
 
-                                            bool result = ms.uploadFiles(filename, fileinfo.Length, grouplist.SelectedItem as string, user, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV), data);
+                                            bool result = ms.uploadFiles(fileinfo.Length, grouplist.SelectedItem as string, user, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV), data);
                                             if (!result)
                                                 MessageBox.Show("Same file already exists!", "Error");
+                                            File.Delete(encryptpath + filename + ".ee");
                                         }
                                     }
                                 }
