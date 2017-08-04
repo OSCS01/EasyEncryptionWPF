@@ -42,8 +42,8 @@ namespace EasyEncryption
             {
                 username = LoginField.Text;
                 this.Hide();
-                Groups g = new Groups();
-                g.Show();
+                Home h = new Home();
+                h.Show();
                 
             }
             else
