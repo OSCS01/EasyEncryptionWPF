@@ -222,10 +222,6 @@ namespace EasyEncryption
         }
 
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-        }
-
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
@@ -246,6 +242,12 @@ namespace EasyEncryption
         {
             NotificationLbl.Visibility = Visibility.Hidden;
             CloseBtn.Visibility = Visibility.Hidden;
+        }
+
+        private void showGroups_Click(object sender, RoutedEventArgs e)
+        {
+            Groups group = new Groups();
+            group.Show();
         }
     }
 }

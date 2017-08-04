@@ -107,7 +107,11 @@
         </s:complexType>
       </s:element>
       <s:element name="uploadFilesResponse">
-        <s:complexType />
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="uploadFilesResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="retrieveNotification">
         <s:complexType>

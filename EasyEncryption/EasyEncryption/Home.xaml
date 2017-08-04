@@ -14,8 +14,8 @@
             <ColumnDefinition Width="109*"/>
             <ColumnDefinition Width="550*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="AddFiles" Content="Files" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Margin="13.5,70,0,0" Click="AddFiles_Click" Grid.Column="3"/>
-        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Margin="33,70,0,0" Grid.Column="4" Click="Button_Click"/>
+        <Button x:Name="AddFiles" Content="Add Files" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Margin="13.5,70,0,0" Click="AddFiles_Click" Grid.Column="3"/>
+        <Button x:Name="showGroups" Content="Groups" HorizontalAlignment="Left" VerticalAlignment="Top" Width="74" Margin="33,70,0,0" Grid.Column="4" Click="showGroups_Click"/>
         <TabControl x:Name="tabControl1" HorizontalAlignment="Left" Height="256" Margin="13.5,129,0,0" Width="587" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Grid.Column="3" SelectionChanged="SelectedPage" Grid.ColumnSpan="2">
             <TabItem Header="Selected Files">
                 <ListView x:Name="selectedFiles" HorizontalAlignment="Left" Height="230" VerticalAlignment="Top" Width="582" Grid.RowSpan="3" Margin="0,0,-1,-0.333">
@@ -47,7 +47,7 @@
         <Button Content="View Logs" Grid.Column="4" HorizontalAlignment="Left" Margin="329,415,0,0" VerticalAlignment="Top" Width="74" x:Name="ViewLogBtn" Visibility="Hidden" Click="ViewLogBtn_Click"/>
         <Button x:Name="RefreshBtn" Content="Refresh" VerticalAlignment="Top" Width="53" Grid.Column="4" Margin="497,160,0,0" Height="25" Click="RefreshBtn_Click"/>
         <Button x:Name="DeleteBtn" Click="DeleteBtn_Click" Content="Delete" Grid.Column="4" HorizontalAlignment="Left" Margin="249.5,415,0,0" VerticalAlignment="Top" Width="74" Visibility="Hidden"/>
-        <Label x:Name="NotificationLbl" Grid.ColumnSpan="5" Content="Label" HorizontalAlignment="Left" VerticalAlignment="Top" Width="705" Margin="0,10,0,0" Height="23" Background="#FFFCFFC8"/>
+        <Label x:Name="NotificationLbl" Grid.ColumnSpan="5" Content="Error" HorizontalAlignment="Left" VerticalAlignment="Top" Width="705" Margin="0,10,0,0" Height="23" Background="#FFFCFFC8"/>
         <Button x:Name="CloseBtn" Click="CloseBtn_Click" Content="Close" Grid.Column="4" HorizontalAlignment="Left" Margin="497.5,13,0,0" VerticalAlignment="Top" Width="32"/>
     </Grid>
 </Window>
