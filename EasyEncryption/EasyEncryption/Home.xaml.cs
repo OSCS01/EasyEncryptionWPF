@@ -39,8 +39,8 @@ namespace EasyEncryption
             InitializeComponent();
             try
             {
-                getMyFiles(username);
-                getNotification(username);
+                //getMyFiles(username);
+                //getNotification(username);
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(myFiles.ItemsSource);
                 view.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
 
