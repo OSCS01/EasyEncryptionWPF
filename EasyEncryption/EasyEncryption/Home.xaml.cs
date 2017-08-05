@@ -39,10 +39,11 @@ namespace EasyEncryption
             InitializeComponent();
             try
             {
-                //getMyFiles(username);
-                //getNotification(username);
+                getMyFiles(username);
+                getNotification(username);
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(myFiles.ItemsSource);
                 view.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
+                view.Filter = UserFilter;
 
             }
             catch (Exception e)
@@ -98,7 +99,7 @@ namespace EasyEncryption
                 foreach (string path in FD.FileNames)
                 {
                     FileInfo fi = new FileInfo(path);
-                    fil.Add(new FileItem() { Originalfilename = fi.Name, path = fi.FullName, Size = fi.Length });
+                    fil.Add(new FileItem() { Filename = fi.Name, path = fi.FullName, Size = fi.Length });
                 }
                 selectedFiles.ItemsSource = null;
                 selectedFiles.ItemsSource = fil;
@@ -118,11 +119,11 @@ namespace EasyEncryption
             foreach (DataRow dr in dt.Rows)
             {
                 FileItem fi = new FileItem();
-                fi.Originalfilename = dr["Filename"].ToString();
+                fi.Filename = dr["Filename"].ToString();
                 fi.Size = long.Parse(dr["Size"].ToString());
-                fi.shared = dr["sharedGroup"].ToString();
-                fi.owner = dr["Owner"].ToString();
-                fi.isDownloaded = ms.getIsDownloaded(fi.Originalfilename, username, fi.shared);
+                fi.Group = dr["sharedGroup"].ToString();
+                fi.Owner = dr["Owner"].ToString();
+                fi.Downloaded = ms.getIsDownloaded(fi.Filename, username, fi.Group);
                 fil.Add(fi);
             }
             myFiles.ItemsSource = fil;
@@ -198,9 +199,9 @@ namespace EasyEncryption
         {
             FileItem item = (FileItem)myFiles.SelectedItem;
             List<string> fileinfo = new List<string>();
-            fileinfo.Add(item.Originalfilename);
-            fileinfo.Add(item.owner);
-            fileinfo.Add(item.shared);
+            fileinfo.Add(item.Filename);
+            fileinfo.Add(item.Owner);
+            fileinfo.Add(item.Group);
             ViewLog vl = new ViewLog(fileinfo);
             vl.Show();
         }
@@ -218,7 +219,7 @@ namespace EasyEncryption
                     {
                         foreach (FileItem item in myFiles.SelectedItems)
                         {
-                            string[] fileinfo = ms.Download(username, item.Originalfilename, item.shared, item.owner);
+                            string[] fileinfo = ms.Download(username, item.Filename, item.Group, item.Owner);
                             byte[] deckey = rsa.Decrypt(Convert.FromBase64String(fileinfo[3]), false);
                             using (RijndaelManaged aes = new RijndaelManaged())
                             {
@@ -261,8 +262,8 @@ namespace EasyEncryption
             {
                 foreach (FileItem item in myFiles.SelectedItems)
                 {
-                    if (item.owner == username)
-                        ms.DeleteFile(item.Originalfilename, item.owner, item.shared, username);
+                    if (item.Owner == username)
+                        ms.DeleteFile(item.Filename, item.Owner, item.Group, username);
                     else
                         System.Windows.Forms.MessageBox.Show("You are not the owner of this file!");
                 }
@@ -285,6 +286,19 @@ namespace EasyEncryption
         private void ClearBtn_Click(object sender, RoutedEventArgs e)
         {
             selectedFiles.ItemsSource = null;
+        }
+
+        private bool UserFilter(object item)
+        {
+            if (String.IsNullOrEmpty(txtFilter.Text))
+                return true;
+            else
+                return ((item as FileItem).Filename.IndexOf(txtFilter.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+        }
+
+        private void txtFilter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CollectionViewSource.GetDefaultView(myFiles.ItemsSource).Refresh();
         }
     }
 }

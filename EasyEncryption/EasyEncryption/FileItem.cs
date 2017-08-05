@@ -10,14 +10,14 @@ namespace EasyEncryption
     {
         public string EncKey { get; set; }
         public string IV { get; set; }
-        public string Originalfilename { get; set; }
-        public string OriginalfileExt { get; set; }
+        public string Filename { get; set; }
+        public string FileExt { get; set; }
         public long Size { get; set; }
-        public string owner { get; set; }
-        public string shared { get; set; }
+        public string Owner { get; set; }
+        public string Group { get; set; }
         public string path { get; set; }
 
-        public bool isDownloaded { get; set; }
+        public bool Downloaded { get; set; }
 
         public FileItem()
         {

@@ -16,12 +16,9 @@
             <ColumnDefinition Width="109*"/>
             <ColumnDefinition Width="550*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="AddFiles" HorizontalAlignment="Left" VerticalAlignment="Top" Width="144" Margin="135.5,117,0,0" Click="AddFiles_Click" Grid.Column="4" Height="56" FontSize="16">
-            <Image Source="/Images/files.png" Width="184" Height="46" HorizontalAlignment="Left" VerticalAlignment="Top"></Image>
-            <TextBlock></TextBlock>
+        <Button x:Name="AddFiles" Content="Add Files" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Margin="13,117,0,0" Click="AddFiles_Click" Grid.Column="3" Height="37" FontSize="16">
         </Button>
-        <Button x:Name="showGroups" Content="Groups" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90
-                " Margin="156,117,0,0" Grid.Column="3" Click="showGroups_Click" Height="37" Grid.ColumnSpan="2" FontSize="16"/>
+        <Button x:Name="showGroups" Content="Groups" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Margin="156,117,0,0" Grid.Column="3" Click="showGroups_Click" Height="37" Grid.ColumnSpan="2" FontSize="16"/>
         <TabControl x:Name="tabControl1" HorizontalAlignment="Left" Height="330" Margin="13,162,0,0" Width="788" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Grid.Column="3" SelectionChanged="SelectedPage" Grid.ColumnSpan="2">
             <TabItem Header="Selected Files" FontSize="16">
                 <ListView x:Name="selectedFiles" HorizontalAlignment="Left" Height="302" VerticalAlignment="Top" Width="786" Grid.RowSpan="3" Margin="0,0,0,0">
@@ -38,11 +35,11 @@
                 <ListView GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" x:Name="myFiles" HorizontalAlignment="Left" Height="302" VerticalAlignment="Top" Width="786" Grid.RowSpan="3" SelectionMode="Multiple" >
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Filename" Width="200" DisplayMemberBinding="{Binding Originalfilename}"/>
+                            <GridViewColumn Header="Filename" Width="200" DisplayMemberBinding="{Binding Filename}"/>
                             <GridViewColumn Header="Size" Width="80" DisplayMemberBinding="{Binding Size}"/>
-                            <GridViewColumn Header="Group" Width="150" DisplayMemberBinding="{Binding shared}"/>
-                            <GridViewColumn Header="Owner" Width="150" DisplayMemberBinding="{Binding owner}"/>
-                            <GridViewColumn Header="Downloaded" Width="150" DisplayMemberBinding="{Binding isDownloaded}"/>
+                            <GridViewColumn Header="Group" Width="150" DisplayMemberBinding="{Binding Group}"/>
+                            <GridViewColumn Header="Owner" Width="150" DisplayMemberBinding="{Binding Owner}"/>
+                            <GridViewColumn Header="Downloaded" Width="150" DisplayMemberBinding="{Binding Downloaded}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -61,5 +58,8 @@
             <TextBlock FontFamily="Corbel" Height="65" Width="319" Foreground="#FF1D55A0" FontSize="48">EasyEncryption</TextBlock>
         </Label>
         <Image HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="64" Grid.Column="1" Margin="16.5,38,0,0" Source="/Images/logo.jpg" Grid.ColumnSpan="3"/>
+        <TextBox x:Name="txtFilter" TextChanged="txtFilter_TextChanged" Grid.Column="4" HorizontalAlignment="Left" Height="31" Margin="477.5,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167" FontSize="16"/>
+        <TextBlock Grid.Column="4" HorizontalAlignment="Left" Margin="852.5,-60,-69.5,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <Label Content="Filter:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="51" Grid.Column="4" Margin="426.5,117,0,0" Height="31" FontSize="16"/>
     </Grid>
 </Window>
