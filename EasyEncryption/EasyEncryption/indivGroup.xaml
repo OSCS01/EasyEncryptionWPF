@@ -5,7 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyEncryption"
         mc:Ignorable="d"
-        Title="indivGroup" Height="599.999" Width="1021.156">
+        Title="indivGroup" Height="599.999" Width="1021.156"
+        Icon="/Images/logo.jpg">
+    <Window.Resources>
+        <ResourceDictionary Source="ResourceDic.xaml">
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
         <Label x:Name="groupTitle" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="337,4,335.4,0" FontSize="20" Width="342">
         </Label>

@@ -5,7 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyEncryption"
         mc:Ignorable="d"
-        Title="Login" Height="300" Width="300">
+        Title="Login" Height="300" Width="300"
+        Icon="/Images/logo.jpg">
+    <Window.Resources>
+        <ResourceDictionary Source="ResourceDic.xaml">
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
         <Label Content="Login" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="112,41,0,0" FontWeight="Bold" FontSize="20"/>
         <Label Content="Username" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="53,105,0,0"/>

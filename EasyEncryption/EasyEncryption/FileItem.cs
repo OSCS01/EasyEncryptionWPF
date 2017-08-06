@@ -11,8 +11,9 @@ namespace EasyEncryption
         public string EncKey { get; set; }
         public string IV { get; set; }
         public string Filename { get; set; }
-        public string FileExt { get; set; }
-        public long Size { get; set; }
+        public string Extension { get; set; }
+        public string Size { get; set; }
+        public long longSize { get; set; }
         public string Owner { get; set; }
         public string Group { get; set; }
         public string path { get; set; }

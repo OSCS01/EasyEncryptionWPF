@@ -8,11 +8,11 @@ namespace EasyEncryption
 {
     class LogItem
     {
-        public string Originalfilename { get; set; }
+        public string Filename { get; set; }
         public string Owner { get; set; }
-        public string UserDownload { get; set; }
+        public string Downloaded { get; set; }
         public string Date { get; set; }
-        public string shared { get; set; }
+        public string Group { get; set; }
 
     }
 }

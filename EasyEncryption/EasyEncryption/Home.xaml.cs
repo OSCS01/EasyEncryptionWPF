@@ -37,19 +37,19 @@ namespace EasyEncryption
         public Home()
         {
             InitializeComponent();
-            try
-            {
+            //try
+            //{
                 getMyFiles(username);
                 getNotification(username);
                 CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(myFiles.ItemsSource);
                 view.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
                 view.Filter = UserFilter;
 
-            }
-            catch (Exception e)
-            {
-                System.Windows.Forms.MessageBox.Show("Cannot connect to server", "Error");
-            }
+            //}
+            //catch (Exception e)
+            //{
+            //    System.Windows.Forms.MessageBox.Show("Cannot connect to server", "Error");
+            //}
         }
 
         private void Sort(string sortBy, ListSortDirection direction)
@@ -78,6 +78,8 @@ namespace EasyEncryption
                         direction = ListSortDirection.Ascending;
 
                     string header = headerClicked.Column.Header as string;
+                    if (header.Equals("Size"))
+                        header = "longSize";
                     Sort(header, direction);
 
                     _lastHeaderClicked = headerClicked;
@@ -99,7 +101,7 @@ namespace EasyEncryption
                 foreach (string path in FD.FileNames)
                 {
                     FileInfo fi = new FileInfo(path);
-                    fil.Add(new FileItem() { Filename = fi.Name, path = fi.FullName, Size = fi.Length });
+                    fil.Add(new FileItem() { Filename = fi.Name, path = fi.FullName, Size = GetBytesReadable(fi.Length) });
                 }
                 selectedFiles.ItemsSource = null;
                 selectedFiles.ItemsSource = fil;
@@ -120,7 +122,9 @@ namespace EasyEncryption
             {
                 FileItem fi = new FileItem();
                 fi.Filename = dr["Filename"].ToString();
-                fi.Size = long.Parse(dr["Size"].ToString());
+                fi.Extension = dr["Extension"].ToString();
+                fi.longSize = long.Parse(dr["Size"].ToString());
+                fi.Size = GetBytesReadable(fi.longSize);
                 fi.Group = dr["sharedGroup"].ToString();
                 fi.Owner = dr["Owner"].ToString();
                 fi.Downloaded = ms.getIsDownloaded(fi.Filename, username, fi.Group);
@@ -155,7 +159,7 @@ namespace EasyEncryption
                     FileInfo file = new FileInfo(fi.path);
                     fileinfo.Add(file);
                 }
-                GroupSelect gs = new GroupSelect(username, fileinfo);
+                GroupSelect gs = new GroupSelect(fileinfo);
                 gs.Show();
                 selectedFiles.ItemsSource = null;
             }
@@ -178,19 +182,19 @@ namespace EasyEncryption
             if (tabControl1.SelectedIndex == 0)
             {
                 downloadBtn.Visibility = Visibility.Hidden;
-                UploadBtn.Visibility = Visibility.Visible;
                 ViewLogBtn.Visibility = Visibility.Hidden;
                 DeleteBtn.Visibility = Visibility.Hidden;
                 RefreshBtn.Visibility = Visibility.Hidden;
                 ClearBtn.Visibility = Visibility.Visible;
+                UploadBtn.Visibility = Visibility.Visible;
             }
             else
             {
                 downloadBtn.Visibility = Visibility.Visible;
-                UploadBtn.Visibility = Visibility.Hidden;
                 ViewLogBtn.Visibility = Visibility.Visible;
                 DeleteBtn.Visibility = Visibility.Visible;
                 RefreshBtn.Visibility = Visibility.Visible;
+                UploadBtn.Visibility = Visibility.Hidden;
                 ClearBtn.Visibility = Visibility.Hidden;
             }
         }
@@ -206,44 +210,92 @@ namespace EasyEncryption
             vl.Show();
         }
 
+        public string GetBytesReadable(long i)
+        {
+            long absolute_i = (i < 0 ? -i : i);
+            string suffix;
+            double readable;
+            if (absolute_i >= 0x1000000000000000) 
+            {
+                suffix = "EB";
+                readable = (i >> 50);
+            }
+            else if (absolute_i >= 0x4000000000000) 
+            {
+                suffix = "PB";
+                readable = (i >> 40);
+            }
+            else if (absolute_i >= 0x10000000000) 
+            {
+                suffix = "TB";
+                readable = (i >> 30);
+            }
+            else if (absolute_i >= 0x40000000)
+            {
+                suffix = "GB";
+                readable = (i >> 20);
+            }
+            else if (absolute_i >= 0x100000) 
+            {
+                suffix = "MB";
+                readable = (i >> 10);
+            }
+            else if (absolute_i >= 0x400) 
+            {
+                suffix = "KB";
+                readable = i;
+            }
+            else
+            {
+                return i.ToString("0 B"); 
+            }
+            readable = (readable / 1024);
+            return readable.ToString("0.## ") + suffix;
+        }
+
         private void downloadBtn_Click(object sender, RoutedEventArgs e)
         {
-            using (var savedpath = new FolderBrowserDialog())
+            if (myFiles.SelectedItem == null)
+                System.Windows.Forms.MessageBox.Show("No files selected!", "Error");
+            else
             {
-                if (savedpath.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                using (var savedpath = new FolderBrowserDialog())
                 {
-                    string decryptpath = savedpath.SelectedPath + "\\";
-                    CspParameters csp = new CspParameters();
-                    csp.KeyContainerName = "MyEEKeys";
-                    using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(csp))
+                    if (savedpath.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
-                        foreach (FileItem item in myFiles.SelectedItems)
+                        string decryptpath = savedpath.SelectedPath + "\\";
+                        CspParameters csp = new CspParameters();
+                        csp.KeyContainerName = "MyEEKeys";
+                        using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(csp))
                         {
-                            string[] fileinfo = ms.Download(username, item.Filename, item.Group, item.Owner);
-                            byte[] deckey = rsa.Decrypt(Convert.FromBase64String(fileinfo[3]), false);
-                            using (RijndaelManaged aes = new RijndaelManaged())
+                            foreach (FileItem item in myFiles.SelectedItems)
                             {
-                                aes.Key = deckey;
-                                aes.IV = Convert.FromBase64String(fileinfo[0]);
-                                aes.Mode = CipherMode.CBC;
-
-                                string filename = fileinfo[1] + fileinfo[2];
-
-                                string decfilepath = decryptpath + filename;
-
-                                byte[] file = Convert.FromBase64String(fileinfo[4]);
-
-                                using (FileStream fsDecrypted = new FileStream(decfilepath, FileMode.Create, FileAccess.Write))
+                                string[] fileinfo = ms.Download(username, item.Filename, item.Group, item.Owner);
+                                byte[] deckey = rsa.Decrypt(Convert.FromBase64String(fileinfo[3]), false);
+                                using (RijndaelManaged aes = new RijndaelManaged())
                                 {
-                                    ICryptoTransform decryptor = aes.CreateDecryptor();
-                                    using (CryptoStream cryptostream = new CryptoStream(fsDecrypted, decryptor, CryptoStreamMode.Write))
+                                    aes.Key = deckey;
+                                    aes.IV = Convert.FromBase64String(fileinfo[0]);
+                                    aes.Mode = CipherMode.CBC;
+
+                                    string filename = fileinfo[1] + fileinfo[2];
+
+                                    string decfilepath = decryptpath + filename;
+
+                                    byte[] file = Convert.FromBase64String(fileinfo[4]);
+
+                                    using (FileStream fsDecrypted = new FileStream(decfilepath, FileMode.Create, FileAccess.Write))
                                     {
-                                        cryptostream.Write(file, 0, file.Length);
+                                        ICryptoTransform decryptor = aes.CreateDecryptor();
+                                        using (CryptoStream cryptostream = new CryptoStream(fsDecrypted, decryptor, CryptoStreamMode.Write))
+                                        {
+                                            cryptostream.Write(file, 0, file.Length);
+                                        }
                                     }
                                 }
                             }
+                            getMyFiles(username);
                         }
-                        getMyFiles(username);
                     }
                 }
             }

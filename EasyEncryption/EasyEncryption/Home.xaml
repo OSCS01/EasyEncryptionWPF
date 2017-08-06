@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="EasyEncryption" Height="599.999" Width="1021.156"
         Icon="/Images/logo.jpg">
+    <Window.Resources>
+        <ResourceDictionary Source="ResourceDic.xaml">
+        </ResourceDictionary>
+    </Window.Resources>
 
     <Grid Margin="0,-10,0.333,9.667">
         <Grid.ColumnDefinitions>
@@ -16,11 +20,11 @@
             <ColumnDefinition Width="109*"/>
             <ColumnDefinition Width="550*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="AddFiles" Content="Add Files" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Margin="13,117,0,0" Click="AddFiles_Click" Grid.Column="3" Height="37" FontSize="16">
+        <Button x:Name="AddFiles" Style="{StaticResource styleButton}" Content="Add Files" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Margin="13,117,0,0" Click="AddFiles_Click" Grid.Column="3" Height="37" FontSize="16">
         </Button>
-        <Button x:Name="showGroups" Content="Groups" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Margin="156,117,0,0" Grid.Column="3" Click="showGroups_Click" Height="37" Grid.ColumnSpan="2" FontSize="16"/>
+        <Button Style="{StaticResource styleButton}" x:Name="showGroups" Content="Groups" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Margin="156,117,0,0" Grid.Column="3" Click="showGroups_Click" Height="37" Grid.ColumnSpan="2" FontSize="16"/>
         <TabControl x:Name="tabControl1" HorizontalAlignment="Left" Height="330" Margin="13,162,0,0" Width="788" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Top" Grid.Column="3" SelectionChanged="SelectedPage" Grid.ColumnSpan="2">
-            <TabItem Header="Selected Files" FontSize="16">
+            <TabItem Foreground="#FF1D55A0" Header="Selected Files" FontSize="16">
                 <ListView x:Name="selectedFiles" HorizontalAlignment="Left" Height="302" VerticalAlignment="Top" Width="786" Grid.RowSpan="3" Margin="0,0,0,0">
                     <ListView.View>
                         <GridView>
@@ -31,35 +35,37 @@
                     </ListView.View>
                 </ListView>
             </TabItem>
-            <TabItem Header="My Files" HorizontalAlignment="Left" Width="84" Height="29" Margin="0,0,0,-3.5" VerticalAlignment="Top" FontSize="16">
+            <TabItem Foreground="#FF1D55A0" Header="My Files" HorizontalAlignment="Left" Width="84" Height="29" Margin="0,0,0,-3.5" VerticalAlignment="Top" FontSize="16">
                 <ListView GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" x:Name="myFiles" HorizontalAlignment="Left" Height="302" VerticalAlignment="Top" Width="786" Grid.RowSpan="3" SelectionMode="Multiple" >
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Filename" Width="200" DisplayMemberBinding="{Binding Filename}"/>
+                            <GridViewColumn Header="Filename" Width="250" DisplayMemberBinding="{Binding Filename}"/>
+                            <GridViewColumn Header="Extension" Width="80" DisplayMemberBinding="{Binding Extension}"/>
                             <GridViewColumn Header="Size" Width="80" DisplayMemberBinding="{Binding Size}"/>
-                            <GridViewColumn Header="Group" Width="150" DisplayMemberBinding="{Binding Group}"/>
-                            <GridViewColumn Header="Owner" Width="150" DisplayMemberBinding="{Binding Owner}"/>
+                            <GridViewColumn Header="Group" Width="100" DisplayMemberBinding="{Binding Group}"/>
+                            <GridViewColumn Header="Owner" Width="100" DisplayMemberBinding="{Binding Owner}"/>
                             <GridViewColumn Header="Downloaded" Width="150" DisplayMemberBinding="{Binding Downloaded}"/>
+                            <GridViewColumn Header="longSize" Width="0" DisplayMemberBinding="{Binding longSize}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
             </TabItem>
         </TabControl>
-        <Button x:Name="UploadBtn" Content="Upload" Grid.Column="4" HorizontalAlignment="Left" Margin="642.5,529,0,0" VerticalAlignment="Top" Width="108" Click="UploadBtn_Click" Height="34" FontSize="18" FontWeight="Bold"/>
+        <Button x:Name="UploadBtn" Style="{StaticResource styleButton}" Content="Upload" Grid.Column="4" HorizontalAlignment="Left" Margin="642.5,529,0,0" VerticalAlignment="Top" Width="108" Click="UploadBtn_Click" Height="34" FontSize="18" FontWeight="Bold"/>
         <TextBlock Grid.Column="3" HorizontalAlignment="Left" Margin="13.5,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Button Content="Download" Height="34" Grid.Column="4" HorizontalAlignment="Left" Margin="642.5,528,0,0" VerticalAlignment="Top" Width="108" Visibility="Hidden"  x:Name="downloadBtn" Click="downloadBtn_Click" FontSize="18" FontWeight="Bold"/>
-        <Button Content="View Logs" Grid.Column="4" HorizontalAlignment="Left" Margin="487.5,529,0,0" VerticalAlignment="Top" Width="108" x:Name="ViewLogBtn" Visibility="Hidden" Click="ViewLogBtn_Click" Height="34" FontSize="16" FontWeight="Bold"/>
-        <Button x:Name="RefreshBtn" Visibility="Hidden" Content="Refresh" VerticalAlignment="Top" Grid.Column="4" Margin="680.5,248,39.5,0" Height="31" Click="RefreshBtn_Click" Width="70" FontSize="14"/>
-        <Button x:Name="DeleteBtn" Click="DeleteBtn_Click" Content="Delete" Grid.Column="4" HorizontalAlignment="Left" Margin="330.5,529,0,0" VerticalAlignment="Top" Width="108" Visibility="Hidden" Height="34" FontSize="18" FontWeight="Bold"/>
+        <Button Content="Download" Style="{StaticResource styleButton}" Height="34" Grid.Column="4" HorizontalAlignment="Left" Margin="642.5,528,0,0" VerticalAlignment="Top" Width="108" Visibility="Hidden"  x:Name="downloadBtn" Click="downloadBtn_Click" FontSize="18" FontWeight="Bold"/>
+        <Button Content="View Logs" Style="{StaticResource styleButton}" Grid.Column="4" HorizontalAlignment="Left" Margin="487.5,529,0,0" VerticalAlignment="Top" Width="108" x:Name="ViewLogBtn" Visibility="Hidden" Click="ViewLogBtn_Click" Height="34" FontSize="16" />
+        <Button x:Name="RefreshBtn" Style="{StaticResource styleButton}" Visibility="Hidden" Content="Refresh" VerticalAlignment="Top" Grid.Column="4" Margin="663.5,248,0,0" Height="31" Click="RefreshBtn_Click" Width="75" FontSize="16"/>
+        <Button x:Name="DeleteBtn" Style="{StaticResource styleButton}" Click="DeleteBtn_Click" Content="Delete" Grid.Column="4" HorizontalAlignment="Left" Margin="330.5,529,0,0" VerticalAlignment="Top" Width="108" Visibility="Hidden" Height="34" FontSize="18"/>
         <Label x:Name="NotificationLbl" Grid.ColumnSpan="5" Content="Error" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1015" Margin="0,10,0,0" Height="23" Background="#FFFCFFC8"/>
         <Button x:Name="CloseBtn" Click="CloseBtn_Click" Content="Close" Grid.Column="4" HorizontalAlignment="Left" Margin="748.5,10,0,0" VerticalAlignment="Top" Width="32" Height="23"/>
-        <Button x:Name="ClearBtn" Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Width="70" Grid.Column="4" Margin="680.5,248,0,0" Click="ClearBtn_Click" Height="31" FontSize="14"/>
+        <Button x:Name="ClearBtn" Style="{StaticResource styleButton}" Content="Clear" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="4" Margin="689.5,248,0,0" Click="ClearBtn_Click" Height="31" FontSize="16"/>
         <Label HorizontalAlignment="Left" VerticalAlignment="Top" Width="359" Grid.Column="2" Margin="10,33,0,0" FontSize="36" Height="65" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="MS Gothic" Grid.ColumnSpan="3">
             <TextBlock FontFamily="Corbel" Height="65" Width="319" Foreground="#FF1D55A0" FontSize="48">EasyEncryption</TextBlock>
         </Label>
         <Image HorizontalAlignment="Left" Height="56" VerticalAlignment="Top" Width="64" Grid.Column="1" Margin="16.5,38,0,0" Source="/Images/logo.jpg" Grid.ColumnSpan="3"/>
         <TextBox x:Name="txtFilter" TextChanged="txtFilter_TextChanged" Grid.Column="4" HorizontalAlignment="Left" Height="31" Margin="477.5,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167" FontSize="16"/>
         <TextBlock Grid.Column="4" HorizontalAlignment="Left" Margin="852.5,-60,-69.5,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
-        <Label Content="Filter:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="51" Grid.Column="4" Margin="426.5,117,0,0" Height="31" FontSize="16"/>
+        <Label Foreground="#FF1D55A0" Content="Filter:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="51" Grid.Column="4" Margin="426.5,117,0,0" Height="31" FontSize="16"/>
     </Grid>
 </Window>

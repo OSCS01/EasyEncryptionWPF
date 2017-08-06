@@ -22,15 +22,14 @@ namespace EasyEncryption
     /// </summary>
     public partial class GroupSelect : Window
     {
-        string user;
+        string user = "Adam";
         EasyEncWS.MainService ms = new EasyEncWS.MainService();
         List<FileInfo> fil;
         string encryptpath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\EncryptedTest\\";
        
-        public GroupSelect(string username,List<FileInfo> info)
+        public GroupSelect(List<FileInfo> info)
         {
             InitializeComponent();
-            user = username;
             fil = info;
             addGroups();
         }
@@ -60,33 +59,35 @@ namespace EasyEncryption
             return fileData;
         }
 
-        //Don't know if this will work.
         public string scanFile(string filepath)
         {
-            string result = "result";
-            Task.Run(async () =>
+            string result = "Error!";
+            try
             {
-                var clam = new ClamClient("localhost", 3310);
-                var scanResult = await clam.ScanFileOnServerAsync(filepath);  //any file you would like!
-
-
-                switch (scanResult.Result)
+                Task.Run(async () =>
                 {
-                    case ClamScanResults.Clean:
-                        Console.WriteLine("The file is clean!");
-                        result = "clean";
-                        break;
-                    case ClamScanResults.VirusDetected:
-                        Console.WriteLine("Virus Found!");
-                        Console.WriteLine("Virus name: {0}", scanResult.InfectedFiles.First().VirusName);
-                        result = "virus";
-                        break;
-                    case ClamScanResults.Error:
-                        Console.WriteLine("Woah an error occured! Error: {0}", scanResult.RawResult);
-                        result = "error";
-                        break;
-                }
-            }).Wait();
+                    var clam = new ClamClient("localhost", 3310);
+                    var scanResult = await clam.ScanFileOnServerAsync(filepath);
+
+
+                    switch (scanResult.Result)
+                    {
+                        case ClamScanResults.Clean:
+                            result = "Clean";
+                            break;
+                        case ClamScanResults.VirusDetected:
+                            result = "Malicious file detected, " + scanResult.InfectedFiles.First().VirusName;
+                            break;
+                        case ClamScanResults.Error:
+                            result = "Error!";
+                            break;
+                    }
+                }).Wait();
+            }
+            catch(Exception e)
+            {
+                return result;
+            }
             return result;
         }
 
@@ -94,9 +95,9 @@ namespace EasyEncryption
         {
             foreach (FileInfo fileinfo in fil)
             {
-                string scanResult = scanFile(fileinfo.FullName);
-                //string scanResult = "clean";
-                if (scanResult.Equals("clean"))
+                //string scanResult = scanFile(fileinfo.FullName);
+                string scanResult = "Clean";
+                if (scanResult.Equals("Clean"))
                 {
                     string fileext = fileinfo.Extension;
                     string filename = fileinfo.Name.Substring(0, fileinfo.Name.Length - fileext.Length);
@@ -137,6 +138,8 @@ namespace EasyEncryption
                                             bool result = ms.uploadFiles(fileinfo.Length, grouplist.SelectedItem as string, user, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV), data);
                                             if (!result)
                                                 MessageBox.Show("Same file already exists!", "Error");
+                                            else
+                                                MessageBox.Show("Upload success!", "Success");
                                             File.Delete(encryptpath + filename + ".ee");
                                         }
                                     }
@@ -145,10 +148,10 @@ namespace EasyEncryption
                         }
                     }
                 }
-                else if (scanResult.Equals("virus"))
-                    System.Windows.Forms.MessageBox.Show("Virus detected!");
-                else
+                else if (scanResult.Equals("Error!"))
                     System.Windows.Forms.MessageBox.Show("An error has occurred");
+                else
+                    System.Windows.Forms.MessageBox.Show(scanResult);
             }
             this.Close();
         }

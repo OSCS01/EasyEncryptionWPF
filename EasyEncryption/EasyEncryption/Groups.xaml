@@ -5,7 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyEncryption"
         mc:Ignorable="d"
-        Title="Groups" Height="599.999" Width="1021.156">
+        Title="Groups" Height="599.999" Width="1021.156"
+        Icon="/Images/logo.jpg">
+    <Window.Resources>
+        <ResourceDictionary Source="ResourceDic.xaml">
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
         <Label Content="Groups" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Margin="474,20,0,0"/>
         <Button x:Name="CreateGroup" Content="Create" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="430,387,0,0" Click="CreateGroup_Click"/>

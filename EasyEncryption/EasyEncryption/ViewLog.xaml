@@ -7,14 +7,14 @@
         mc:Ignorable="d"
         Title="ViewLog" Height="505.243" Width="770.088">
     <Grid>
-        <ListView x:Name="LogView" HorizontalAlignment="Left" Height="458" VerticalAlignment="Top" Width="745" Margin="10,10,0,0" SelectionChanged="LogView_SelectionChanged">
+        <ListView x:Name="LogView" HorizontalAlignment="Left" Height="458" VerticalAlignment="Top" Width="745" Margin="10,10,0,0"  GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Filename" DisplayMemberBinding="{Binding Originalfilename}"/>
-                    <GridViewColumn Header="Owner" DisplayMemberBinding="{Binding Owner}"/>
-                    <GridViewColumn Header="Downloaded By" DisplayMemberBinding="{Binding UserDownload}"/>
-                    <GridViewColumn Header="Date" DisplayMemberBinding="{Binding Date}"/>
-                    <GridViewColumn Header="Group" DisplayMemberBinding="{Binding shared}"/>
+                    <GridViewColumn Header="Filename" Width="150" DisplayMemberBinding="{Binding Filename}"/>
+                    <GridViewColumn Header="Owner" Width="100" DisplayMemberBinding="{Binding Owner}"/>
+                    <GridViewColumn Header="Downloaded" Width="100" DisplayMemberBinding="{Binding Downloaded}"/>
+                    <GridViewColumn Header="Date" Width="300" DisplayMemberBinding="{Binding Date}"/>
+                    <GridViewColumn Header="Group" Width="100" DisplayMemberBinding="{Binding Group}"/>
                 </GridView>
             </ListView.View>
         </ListView>
