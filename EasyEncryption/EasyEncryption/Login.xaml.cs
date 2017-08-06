@@ -38,36 +38,46 @@ namespace EasyEncryption
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 
-            string username = LoginField.Text;
+            username = LoginField.Text;
             string password = PassField.Password;
-        //    String s = PassField.Password;
-        //    byte[] data = Encoding.UTF8.GetBytes(s);
-        //    SHA256Managed alg = new SHA256Managed();
-        //    byte[] hash = alg.ComputeHash(data);
-        //    string hashString = string.Empty;
-        //    foreach (byte x in hash)
-        //    {
-        //        hashString += String.Format("{0:x2}", x);
-        //    }
-            
-            
-        //    SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) From Users where username ='" + LoginField.Text + "' and pass = '" + hashString + "'", constring);
-        //    DataTable dt = new DataTable();
-        //    sda.Fill(dt);
-        //    if (dt.Rows[0][0].ToString() == "1")
-        //    {
-        //        username = LoginField.Text;
-        //        this.Hide();
-        //        Home h = new Home();
-        //        h.Show();
-                
-        //    }
-        //    else
-        //    {
-        //        MessageBox.Show("Please check your username and password");
-        //    }
-            
-            
+            if (ms.loginValidation(username, password) == true)
+            {
+                this.Hide();
+                Home h = new Home();
+                h.Show();
+            }
+            else
+            {
+                MessageBox.Show("Please check your username and password");
+            }
+            //String s = PassField.Password;
+            //byte[] data = Encoding.UTF8.GetBytes(s);
+            //SHA256Managed alg = new SHA256Managed();
+            //byte[] hash = alg.ComputeHash(data);
+            //string hashString = string.Empty;
+            //foreach (byte x in hash)
+            //{
+            //    hashString += String.Format("{0:x2}", x);
+            //}
+
+
+            //SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) From Users where username ='" + LoginField.Text + "' and pass = '" + hashString + "'", constring);
+            //DataTable dt = new DataTable();
+            //sda.Fill(dt);
+            //if (dt.Rows[0][0].ToString() == "1")
+            //{
+            //    username = LoginField.Text;
+            //    this.Hide();
+            //    Home h = new Home();
+            //    h.Show();
+
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Please check your username and password");
+            //}
+
+
 
         }
     }
