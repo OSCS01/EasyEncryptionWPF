@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,7 +37,18 @@ namespace EasyEncryption
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) From Users where username ='" + LoginField.Text + "' and pass = '" + PassField.Password + "'", constring);
+            String s = PassField.Password;
+            byte[] data = Encoding.UTF8.GetBytes(s);
+            SHA256Managed alg = new SHA256Managed();
+            byte[] hash = alg.ComputeHash(data);
+            string hashString = string.Empty;
+            foreach (byte x in hash)
+            {
+                hashString += String.Format("{0:x2}", x);
+            }
+            
+            
+            SqlDataAdapter sda = new SqlDataAdapter("Select Count(*) From Users where username ='" + LoginField.Text + "' and pass = '" + hashString + "'", constring);
             DataTable dt = new DataTable();
             sda.Fill(dt);
             if (dt.Rows[0][0].ToString() == "1")

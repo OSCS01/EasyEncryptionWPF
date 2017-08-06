@@ -94,8 +94,8 @@ namespace EasyEncryption
         {
             foreach (FileInfo fileinfo in fil)
             {
-                //string scanResult = scanFile(fileinfo.FullName);
-                string scanResult = "clean";
+                string scanResult = scanFile(fileinfo.FullName);
+                //string scanResult = "clean";
                 if (scanResult.Equals("clean"))
                 {
                     string fileext = fileinfo.Extension;
