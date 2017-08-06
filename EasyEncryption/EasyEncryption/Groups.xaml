@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyEncryption"
         mc:Ignorable="d"
-        Title="Groups" Height="300" Width="300">
+        Title="Groups" Height="599.999" Width="1021.156">
     <Grid>
-        <Label Content="Groups" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Margin="107,10,0,0"/>
-        <Button x:Name="CreateGroup" Content="Create" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="169,243,0,0" Click="CreateGroup_Click"/>
-        <ListView x:Name="myGroups" Margin="0,83,-0.4,43.4" SelectionChanged="ListView_SelectionChanged">
+        <Label Content="Groups" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Margin="474,20,0,0"/>
+        <Button x:Name="CreateGroup" Content="Create" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="430,387,0,0" Click="CreateGroup_Click"/>
+        <ListView x:Name="myGroups" Margin="294,62,294.4,0" SelectionChanged="ListView_SelectionChanged" Height="300" VerticalAlignment="Top">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Your Groups" DisplayMemberBinding="{Binding group}"/>
@@ -22,9 +22,8 @@
 
             </ListView.ItemContainerStyle>
         </ListView>
-        <TextBox x:Name="newGroup" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="42,241,0,0"/>
+        <TextBox x:Name="newGroup" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="294,387,0,0"/>
         <TextBlock HorizontalAlignment="Left" Margin="107,243,0,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <DataGrid HorizontalAlignment="Left" Height="16" Margin="282,588,-19.4,-333.6" VerticalAlignment="Top" Width="31"/>
 
 
     </Grid>

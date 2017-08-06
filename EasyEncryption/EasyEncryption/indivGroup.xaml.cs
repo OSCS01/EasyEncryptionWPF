@@ -25,6 +25,7 @@ namespace EasyEncryption
     /// </summary>
     public partial class indivGroup : Window
     {
+        EasyEncWS.MainService ms = new EasyEncWS.MainService();
         const string constring = @"Data Source=CEPHAS\SQLEXPRESS;Initial Catalog = EasyEncryption;Integrated Security = True";
         string username = Login.username;
         string group;
@@ -42,6 +43,7 @@ namespace EasyEncryption
             {
                 using (SqlCommand cmd = new SqlCommand("SELECT username FROM UsersGroups WHERE GroupName = @group"))
                 {
+                    //cmd.Parameters.AddWithValue("@username", username);
                     cmd.Parameters.AddWithValue("@group", group);
                     cmd.Connection = con;
                     cmd.Connection.Open();

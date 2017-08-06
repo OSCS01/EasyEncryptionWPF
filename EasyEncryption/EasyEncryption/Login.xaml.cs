@@ -21,6 +21,7 @@ namespace EasyEncryption
     /// </summary>
     public partial class Login : Window
     {
+        EasyEncWS.MainService ms = new EasyEncWS.MainService();
         public static string username;
         const string constring = @"Data Source=CEPHAS\SQLEXPRESS;Initial Catalog = EasyEncryption;Integrated Security = True";
         public Login()
