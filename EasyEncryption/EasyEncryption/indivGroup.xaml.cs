@@ -33,11 +33,13 @@ namespace EasyEncryption
         public indivGroup(string groupname)
         {
             InitializeComponent();
-            group = groupTitle.ToString();
-            getGroupMem(group);
+            groupTitle.Content = groupname;
+            group = groupname;
+            getGroupMem(username, group);
             displayContacts();
+            checkGrpOwner(group);
         }
-        private void getGroupMem(string group)
+        private void getGroupMem(string username, string group)
         {
             string xml = ms.retrieveGroupMem(group);
             StringReader xr = new StringReader(xml);
@@ -70,7 +72,7 @@ namespace EasyEncryption
             //            foreach (DataRow dr in dt.Rows)
             //            {
             //                UserItems ui = new UserItems();
-            //                ui.name = dr["username"].ToString();
+            //                ui.user = dr["username"].ToString();
             //                uilist.Add(ui);
             //            }
             //            groupMembers.ItemsSource = uilist;
@@ -79,6 +81,19 @@ namespace EasyEncryption
 
             //}
         }
+        private void checkGrpOwner(string group)
+        {
+            if(string.Equals(ms.checkGrpOwner(group), username, StringComparison.CurrentCultureIgnoreCase))
+            {
+                deleteBtn.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                deleteBtn.Visibility = Visibility.Hidden;
+            }
+
+        }
+
         private void displayContacts()
         {
             string xml = ms.retrieveContacts();
@@ -138,16 +153,21 @@ namespace EasyEncryption
 
             foreach (string s in selectedNames)
             {
-                using (SqlConnection con = new SqlConnection(constring))
-                {
-                    SqlCommand cmd = new SqlCommand("INSERT INTO UsersGroups (username,GroupName) SELECT username, '" + group + "' FROM Users WHERE name = '" + s + "'");
-                    cmd.Connection = con;
-                    cmd.Connection.Open();
-                    cmd.ExecuteNonQuery();
-                }
+                ms.addGroupMem(group,s);
+                //if (ms.checkGrpMem(group, s) == true)
+                //{
+                //    MessageBox.Show("User has already been added!");
+                //}
+                //else
+                //{
+
+                //    MessageBox.Show("wegferf");
+                //}
+
+                
             }
 
-            getGroupMem(group);
+            getGroupMem(username, group);
             /*
             List<ContactsItem> uilist = new List<ContactsItem>();
             var SelectedList = new List<string>();
@@ -170,6 +190,16 @@ namespace EasyEncryption
                 }
                 
             }*/
+
+        }
+
+        private void deleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+            ms.DeleteGrp(group);
+            MessageBox.Show(group + " has been deleted!");
+            this.Hide();
+            Groups g = new Groups();
+            g.Show();
 
         }
     }

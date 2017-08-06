@@ -18,7 +18,7 @@
         <ListView x:Name="groupMembers"  Margin="184,46,184.4,180.4">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Members" DisplayMemberBinding="{Binding name}"/>
+                    <GridViewColumn Header="Members" DisplayMemberBinding="{Binding user}"/>
                 </GridView>
             </ListView.View>
 
@@ -30,5 +30,6 @@
                 <DataGridCheckBoxColumn x:Name="mycheckbox" Binding="{Binding checkbox}"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Button x:Name="deleteBtn" Content="Delete Group" Style="{StaticResource styleButton}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="86" Margin="890,520,0,0" Height="21" Click="deleteBtn_Click"/>
     </Grid>
 </Window>

@@ -180,6 +180,56 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="addGroupMem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="group" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="addGroupMemResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="checkGrpMem">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GroupName" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="name" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="checkGrpMemResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="checkGrpMemResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="checkGrpOwner">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GroupName" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="checkGrpOwnerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="checkGrpOwnerResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteGrp">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="group" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteGrpResponse">
+        <s:complexType />
+      </s:element>
       <s:element name="DeleteFile">
         <s:complexType>
           <s:sequence>
@@ -332,6 +382,30 @@
   <wsdl:message name="retrieveContactsSoapOut">
     <wsdl:part name="parameters" element="tns:retrieveContactsResponse" />
   </wsdl:message>
+  <wsdl:message name="addGroupMemSoapIn">
+    <wsdl:part name="parameters" element="tns:addGroupMem" />
+  </wsdl:message>
+  <wsdl:message name="addGroupMemSoapOut">
+    <wsdl:part name="parameters" element="tns:addGroupMemResponse" />
+  </wsdl:message>
+  <wsdl:message name="checkGrpMemSoapIn">
+    <wsdl:part name="parameters" element="tns:checkGrpMem" />
+  </wsdl:message>
+  <wsdl:message name="checkGrpMemSoapOut">
+    <wsdl:part name="parameters" element="tns:checkGrpMemResponse" />
+  </wsdl:message>
+  <wsdl:message name="checkGrpOwnerSoapIn">
+    <wsdl:part name="parameters" element="tns:checkGrpOwner" />
+  </wsdl:message>
+  <wsdl:message name="checkGrpOwnerSoapOut">
+    <wsdl:part name="parameters" element="tns:checkGrpOwnerResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteGrpSoapIn">
+    <wsdl:part name="parameters" element="tns:DeleteGrp" />
+  </wsdl:message>
+  <wsdl:message name="DeleteGrpSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteGrpResponse" />
+  </wsdl:message>
   <wsdl:message name="DeleteFileSoapIn">
     <wsdl:part name="parameters" element="tns:DeleteFile" />
   </wsdl:message>
@@ -410,6 +484,22 @@
     <wsdl:operation name="retrieveContacts">
       <wsdl:input message="tns:retrieveContactsSoapIn" />
       <wsdl:output message="tns:retrieveContactsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="addGroupMem">
+      <wsdl:input message="tns:addGroupMemSoapIn" />
+      <wsdl:output message="tns:addGroupMemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="checkGrpMem">
+      <wsdl:input message="tns:checkGrpMemSoapIn" />
+      <wsdl:output message="tns:checkGrpMemSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="checkGrpOwner">
+      <wsdl:input message="tns:checkGrpOwnerSoapIn" />
+      <wsdl:output message="tns:checkGrpOwnerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGrp">
+      <wsdl:input message="tns:DeleteGrpSoapIn" />
+      <wsdl:output message="tns:DeleteGrpSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="DeleteFile">
       <wsdl:input message="tns:DeleteFileSoapIn" />
@@ -535,6 +625,42 @@
     </wsdl:operation>
     <wsdl:operation name="retrieveContacts">
       <soap:operation soapAction="http://tempuri.org/retrieveContacts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addGroupMem">
+      <soap:operation soapAction="http://tempuri.org/addGroupMem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkGrpMem">
+      <soap:operation soapAction="http://tempuri.org/checkGrpMem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkGrpOwner">
+      <soap:operation soapAction="http://tempuri.org/checkGrpOwner" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGrp">
+      <soap:operation soapAction="http://tempuri.org/DeleteGrp" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -691,6 +817,42 @@
     </wsdl:operation>
     <wsdl:operation name="retrieveContacts">
       <soap12:operation soapAction="http://tempuri.org/retrieveContacts" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addGroupMem">
+      <soap12:operation soapAction="http://tempuri.org/addGroupMem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkGrpMem">
+      <soap12:operation soapAction="http://tempuri.org/checkGrpMem" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkGrpOwner">
+      <soap12:operation soapAction="http://tempuri.org/checkGrpOwner" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteGrp">
+      <soap12:operation soapAction="http://tempuri.org/DeleteGrp" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

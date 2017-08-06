@@ -54,6 +54,14 @@ namespace EasyEncryption.EasyEncWS {
         
         private System.Threading.SendOrPostCallback retrieveContactsOperationCompleted;
         
+        private System.Threading.SendOrPostCallback addGroupMemOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback checkGrpMemOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback checkGrpOwnerOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DeleteGrpOperationCompleted;
+        
         private System.Threading.SendOrPostCallback DeleteFileOperationCompleted;
         
         private System.Threading.SendOrPostCallback retrieveOperationCompleted;
@@ -137,6 +145,18 @@ namespace EasyEncryption.EasyEncWS {
         
         /// <remarks/>
         public event retrieveContactsCompletedEventHandler retrieveContactsCompleted;
+        
+        /// <remarks/>
+        public event addGroupMemCompletedEventHandler addGroupMemCompleted;
+        
+        /// <remarks/>
+        public event checkGrpMemCompletedEventHandler checkGrpMemCompleted;
+        
+        /// <remarks/>
+        public event checkGrpOwnerCompletedEventHandler checkGrpOwnerCompleted;
+        
+        /// <remarks/>
+        public event DeleteGrpCompletedEventHandler DeleteGrpCompleted;
         
         /// <remarks/>
         public event DeleteFileCompletedEventHandler DeleteFileCompleted;
@@ -505,6 +525,124 @@ namespace EasyEncryption.EasyEncWS {
             if ((this.retrieveContactsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.retrieveContactsCompleted(this, new retrieveContactsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/addGroupMem", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void addGroupMem(string group, string name) {
+            this.Invoke("addGroupMem", new object[] {
+                        group,
+                        name});
+        }
+        
+        /// <remarks/>
+        public void addGroupMemAsync(string group, string name) {
+            this.addGroupMemAsync(group, name, null);
+        }
+        
+        /// <remarks/>
+        public void addGroupMemAsync(string group, string name, object userState) {
+            if ((this.addGroupMemOperationCompleted == null)) {
+                this.addGroupMemOperationCompleted = new System.Threading.SendOrPostCallback(this.OnaddGroupMemOperationCompleted);
+            }
+            this.InvokeAsync("addGroupMem", new object[] {
+                        group,
+                        name}, this.addGroupMemOperationCompleted, userState);
+        }
+        
+        private void OnaddGroupMemOperationCompleted(object arg) {
+            if ((this.addGroupMemCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.addGroupMemCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/checkGrpMem", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool checkGrpMem(string GroupName, string name) {
+            object[] results = this.Invoke("checkGrpMem", new object[] {
+                        GroupName,
+                        name});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void checkGrpMemAsync(string GroupName, string name) {
+            this.checkGrpMemAsync(GroupName, name, null);
+        }
+        
+        /// <remarks/>
+        public void checkGrpMemAsync(string GroupName, string name, object userState) {
+            if ((this.checkGrpMemOperationCompleted == null)) {
+                this.checkGrpMemOperationCompleted = new System.Threading.SendOrPostCallback(this.OncheckGrpMemOperationCompleted);
+            }
+            this.InvokeAsync("checkGrpMem", new object[] {
+                        GroupName,
+                        name}, this.checkGrpMemOperationCompleted, userState);
+        }
+        
+        private void OncheckGrpMemOperationCompleted(object arg) {
+            if ((this.checkGrpMemCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.checkGrpMemCompleted(this, new checkGrpMemCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/checkGrpOwner", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string checkGrpOwner(string GroupName) {
+            object[] results = this.Invoke("checkGrpOwner", new object[] {
+                        GroupName});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void checkGrpOwnerAsync(string GroupName) {
+            this.checkGrpOwnerAsync(GroupName, null);
+        }
+        
+        /// <remarks/>
+        public void checkGrpOwnerAsync(string GroupName, object userState) {
+            if ((this.checkGrpOwnerOperationCompleted == null)) {
+                this.checkGrpOwnerOperationCompleted = new System.Threading.SendOrPostCallback(this.OncheckGrpOwnerOperationCompleted);
+            }
+            this.InvokeAsync("checkGrpOwner", new object[] {
+                        GroupName}, this.checkGrpOwnerOperationCompleted, userState);
+        }
+        
+        private void OncheckGrpOwnerOperationCompleted(object arg) {
+            if ((this.checkGrpOwnerCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.checkGrpOwnerCompleted(this, new checkGrpOwnerCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/DeleteGrp", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void DeleteGrp(string group) {
+            this.Invoke("DeleteGrp", new object[] {
+                        group});
+        }
+        
+        /// <remarks/>
+        public void DeleteGrpAsync(string group) {
+            this.DeleteGrpAsync(group, null);
+        }
+        
+        /// <remarks/>
+        public void DeleteGrpAsync(string group, object userState) {
+            if ((this.DeleteGrpOperationCompleted == null)) {
+                this.DeleteGrpOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDeleteGrpOperationCompleted);
+            }
+            this.InvokeAsync("DeleteGrp", new object[] {
+                        group}, this.DeleteGrpOperationCompleted, userState);
+        }
+        
+        private void OnDeleteGrpOperationCompleted(object arg) {
+            if ((this.DeleteGrpCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DeleteGrpCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -984,6 +1122,66 @@ namespace EasyEncryption.EasyEncWS {
             }
         }
     }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void addGroupMemCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void checkGrpMemCompletedEventHandler(object sender, checkGrpMemCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class checkGrpMemCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal checkGrpMemCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void checkGrpOwnerCompletedEventHandler(object sender, checkGrpOwnerCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class checkGrpOwnerCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal checkGrpOwnerCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void DeleteGrpCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
