@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,67 +33,93 @@ namespace EasyEncryption
         public indivGroup(string groupname)
         {
             InitializeComponent();
-            groupTitle.Content = groupname;
-            group = groupname;
-            getGroupMem(username);
+            group = groupTitle.ToString();
+            getGroupMem(group);
             displayContacts();
         }
-        private void getGroupMem(string username)
+        private void getGroupMem(string group)
         {
-            using (SqlConnection con = new SqlConnection(constring))
+            string xml = ms.retrieveGroupMem(group);
+            StringReader xr = new StringReader(xml);
+            DataTable dt = new DataTable();
+            dt.ReadXml(xr);
+            List<UserItems> uilist = new List<UserItems>();
+            foreach (DataRow dr in dt.Rows)
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT username FROM UsersGroups WHERE GroupName = @group"))
-                {
-                    //cmd.Parameters.AddWithValue("@username", username);
-                    cmd.Parameters.AddWithValue("@group", group);
-                    cmd.Connection = con;
-                    cmd.Connection.Open();
-                    using (SqlDataAdapter sda = new SqlDataAdapter())
-                    {
-                        sda.SelectCommand = cmd;
-                        DataTable dt = new DataTable();
-                        sda.Fill(dt);
-                        List<UserItems> uilist = new List<UserItems>();
-
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            UserItems ui = new UserItems();
-                            ui.name = dr["username"].ToString();
-                            uilist.Add(ui);
-                        }
-                        groupMembers.ItemsSource = uilist;
-                    }
-                }
-
+                UserItems ui = new UserItems();
+                ui.user = dr["username"].ToString();
+                uilist.Add(ui);
             }
+            groupMembers.ItemsSource = uilist;
+
+            //using (SqlConnection con = new SqlConnection(constring))
+            //{
+            //    using (SqlCommand cmd = new SqlCommand("SELECT username FROM UsersGroups WHERE GroupName = @group"))
+            //    {
+            //        //cmd.Parameters.AddWithValue("@username", username);
+            //        cmd.Parameters.AddWithValue("@group", group);
+            //        cmd.Connection = con;
+            //        cmd.Connection.Open();
+            //        using (SqlDataAdapter sda = new SqlDataAdapter())
+            //        {
+            //            sda.SelectCommand = cmd;
+            //            DataTable dt = new DataTable();
+            //            sda.Fill(dt);
+            //            List<UserItems> uilist = new List<UserItems>();
+
+            //            foreach (DataRow dr in dt.Rows)
+            //            {
+            //                UserItems ui = new UserItems();
+            //                ui.name = dr["username"].ToString();
+            //                uilist.Add(ui);
+            //            }
+            //            groupMembers.ItemsSource = uilist;
+            //        }
+            //    }
+
+            //}
         }
         private void displayContacts()
         {
-            using (SqlConnection con = new SqlConnection(constring))
+            string xml = ms.retrieveContacts();
+            StringReader xr = new StringReader(xml);
+            DataTable dt = new DataTable();
+            dt.ReadXml(xr);
+            List<ContactsItem> cilist = new List<ContactsItem>();
+            foreach (DataRow dr in dt.Rows)
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT name FROM Users"))
-                {
-                    cmd.Connection = con;
-                    cmd.Connection.Open();
-                    using (SqlDataAdapter sda = new SqlDataAdapter())
-                    {
-                        sda.SelectCommand = cmd;
-                        DataTable dt = new DataTable();
-                        sda.Fill(dt);
-                        
-                        List<ContactsItem> uilist = new List<ContactsItem>();
+                ContactsItem ci = new ContactsItem();
+                ci.name = dr["name"].ToString();
+                cilist.Add(ci);
 
-                        foreach (DataRow dr in dt.Rows)
-                        {
-                            ContactsItem ci = new ContactsItem();
-                            ci.name = dr["name"].ToString();
-                            uilist.Add(ci);
-                        }
-                        addContacts.ItemsSource = uilist; 
-                    }
-                }
 
             }
+            addContacts.ItemsSource = cilist;
+            //using (SqlConnection con = new SqlConnection(constring))
+            //{
+            //    using (SqlCommand cmd = new SqlCommand("SELECT name FROM Users"))
+            //    {
+            //        cmd.Connection = con;
+            //        cmd.Connection.Open();
+            //        using (SqlDataAdapter sda = new SqlDataAdapter())
+            //        {
+            //            sda.SelectCommand = cmd;
+            //            DataTable dt = new DataTable();
+            //            sda.Fill(dt);
+
+            //            List<ContactsItem> uilist = new List<ContactsItem>();
+
+            //            foreach (DataRow dr in dt.Rows)
+            //            {
+            //                ContactsItem ci = new ContactsItem();
+            //                ci.name = dr["name"].ToString();
+            //                uilist.Add(ci);
+            //            }
+            //            addContacts.ItemsSource = uilist; 
+            //        }
+            //    }
+
+            //}
 
         }
 
@@ -120,7 +147,7 @@ namespace EasyEncryption
                 }
             }
 
-            getGroupMem(username);
+            getGroupMem(group);
             /*
             List<ContactsItem> uilist = new List<ContactsItem>();
             var SelectedList = new List<string>();

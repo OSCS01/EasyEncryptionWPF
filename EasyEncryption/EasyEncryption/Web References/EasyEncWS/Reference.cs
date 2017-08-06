@@ -20,6 +20,7 @@ namespace EasyEncryption.EasyEncWS {
     using System.Web.Services.Protocols;
     using System.Xml.Serialization;
     using System.ComponentModel;
+    using System.Data;
     
     
     /// <remarks/>
@@ -35,9 +36,23 @@ namespace EasyEncryption.EasyEncWS {
         
         private System.Threading.SendOrPostCallback loginValidationOperationCompleted;
         
+        private System.Threading.SendOrPostCallback checkGroupOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback addGroupOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback displayGrpMemOperationCompleted;
+        
         private System.Threading.SendOrPostCallback getLogsOperationCompleted;
         
         private System.Threading.SendOrPostCallback getGroupsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback displayGroupMemOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback retrieveGroupMemOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback displayContactsOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback retrieveContactsOperationCompleted;
         
         private System.Threading.SendOrPostCallback DeleteFileOperationCompleted;
         
@@ -97,10 +112,31 @@ namespace EasyEncryption.EasyEncWS {
         public event loginValidationCompletedEventHandler loginValidationCompleted;
         
         /// <remarks/>
+        public event checkGroupCompletedEventHandler checkGroupCompleted;
+        
+        /// <remarks/>
+        public event addGroupCompletedEventHandler addGroupCompleted;
+        
+        /// <remarks/>
+        public event displayGrpMemCompletedEventHandler displayGrpMemCompleted;
+        
+        /// <remarks/>
         public event getLogsCompletedEventHandler getLogsCompleted;
         
         /// <remarks/>
         public event getGroupsCompletedEventHandler getGroupsCompleted;
+        
+        /// <remarks/>
+        public event displayGroupMemCompletedEventHandler displayGroupMemCompleted;
+        
+        /// <remarks/>
+        public event retrieveGroupMemCompletedEventHandler retrieveGroupMemCompleted;
+        
+        /// <remarks/>
+        public event displayContactsCompletedEventHandler displayContactsCompleted;
+        
+        /// <remarks/>
+        public event retrieveContactsCompletedEventHandler retrieveContactsCompleted;
         
         /// <remarks/>
         public event DeleteFileCompletedEventHandler DeleteFileCompleted;
@@ -211,6 +247,94 @@ namespace EasyEncryption.EasyEncWS {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/checkGroup", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public bool checkGroup(string newGroup) {
+            object[] results = this.Invoke("checkGroup", new object[] {
+                        newGroup});
+            return ((bool)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void checkGroupAsync(string newGroup) {
+            this.checkGroupAsync(newGroup, null);
+        }
+        
+        /// <remarks/>
+        public void checkGroupAsync(string newGroup, object userState) {
+            if ((this.checkGroupOperationCompleted == null)) {
+                this.checkGroupOperationCompleted = new System.Threading.SendOrPostCallback(this.OncheckGroupOperationCompleted);
+            }
+            this.InvokeAsync("checkGroup", new object[] {
+                        newGroup}, this.checkGroupOperationCompleted, userState);
+        }
+        
+        private void OncheckGroupOperationCompleted(object arg) {
+            if ((this.checkGroupCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.checkGroupCompleted(this, new checkGroupCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/addGroup", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public void addGroup(string username, string GroupName) {
+            this.Invoke("addGroup", new object[] {
+                        username,
+                        GroupName});
+        }
+        
+        /// <remarks/>
+        public void addGroupAsync(string username, string GroupName) {
+            this.addGroupAsync(username, GroupName, null);
+        }
+        
+        /// <remarks/>
+        public void addGroupAsync(string username, string GroupName, object userState) {
+            if ((this.addGroupOperationCompleted == null)) {
+                this.addGroupOperationCompleted = new System.Threading.SendOrPostCallback(this.OnaddGroupOperationCompleted);
+            }
+            this.InvokeAsync("addGroup", new object[] {
+                        username,
+                        GroupName}, this.addGroupOperationCompleted, userState);
+        }
+        
+        private void OnaddGroupOperationCompleted(object arg) {
+            if ((this.addGroupCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.addGroupCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/displayGrpMem", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string[] displayGrpMem(string GroupName) {
+            object[] results = this.Invoke("displayGrpMem", new object[] {
+                        GroupName});
+            return ((string[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void displayGrpMemAsync(string GroupName) {
+            this.displayGrpMemAsync(GroupName, null);
+        }
+        
+        /// <remarks/>
+        public void displayGrpMemAsync(string GroupName, object userState) {
+            if ((this.displayGrpMemOperationCompleted == null)) {
+                this.displayGrpMemOperationCompleted = new System.Threading.SendOrPostCallback(this.OndisplayGrpMemOperationCompleted);
+            }
+            this.InvokeAsync("displayGrpMem", new object[] {
+                        GroupName}, this.displayGrpMemOperationCompleted, userState);
+        }
+        
+        private void OndisplayGrpMemOperationCompleted(object arg) {
+            if ((this.displayGrpMemCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.displayGrpMemCompleted(this, new displayGrpMemCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/getLogs", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
         public string getLogs(string name, string owner, string group) {
             object[] results = this.Invoke("getLogs", new object[] {
@@ -269,6 +393,118 @@ namespace EasyEncryption.EasyEncWS {
             if ((this.getGroupsCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.getGroupsCompleted(this, new getGroupsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/displayGroupMem", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public System.Data.DataTable displayGroupMem(string GroupName) {
+            object[] results = this.Invoke("displayGroupMem", new object[] {
+                        GroupName});
+            return ((System.Data.DataTable)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void displayGroupMemAsync(string GroupName) {
+            this.displayGroupMemAsync(GroupName, null);
+        }
+        
+        /// <remarks/>
+        public void displayGroupMemAsync(string GroupName, object userState) {
+            if ((this.displayGroupMemOperationCompleted == null)) {
+                this.displayGroupMemOperationCompleted = new System.Threading.SendOrPostCallback(this.OndisplayGroupMemOperationCompleted);
+            }
+            this.InvokeAsync("displayGroupMem", new object[] {
+                        GroupName}, this.displayGroupMemOperationCompleted, userState);
+        }
+        
+        private void OndisplayGroupMemOperationCompleted(object arg) {
+            if ((this.displayGroupMemCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.displayGroupMemCompleted(this, new displayGroupMemCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/retrieveGroupMem", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string retrieveGroupMem(string GroupName) {
+            object[] results = this.Invoke("retrieveGroupMem", new object[] {
+                        GroupName});
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void retrieveGroupMemAsync(string GroupName) {
+            this.retrieveGroupMemAsync(GroupName, null);
+        }
+        
+        /// <remarks/>
+        public void retrieveGroupMemAsync(string GroupName, object userState) {
+            if ((this.retrieveGroupMemOperationCompleted == null)) {
+                this.retrieveGroupMemOperationCompleted = new System.Threading.SendOrPostCallback(this.OnretrieveGroupMemOperationCompleted);
+            }
+            this.InvokeAsync("retrieveGroupMem", new object[] {
+                        GroupName}, this.retrieveGroupMemOperationCompleted, userState);
+        }
+        
+        private void OnretrieveGroupMemOperationCompleted(object arg) {
+            if ((this.retrieveGroupMemCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.retrieveGroupMemCompleted(this, new retrieveGroupMemCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/displayContacts", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public System.Data.DataTable displayContacts() {
+            object[] results = this.Invoke("displayContacts", new object[0]);
+            return ((System.Data.DataTable)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void displayContactsAsync() {
+            this.displayContactsAsync(null);
+        }
+        
+        /// <remarks/>
+        public void displayContactsAsync(object userState) {
+            if ((this.displayContactsOperationCompleted == null)) {
+                this.displayContactsOperationCompleted = new System.Threading.SendOrPostCallback(this.OndisplayContactsOperationCompleted);
+            }
+            this.InvokeAsync("displayContacts", new object[0], this.displayContactsOperationCompleted, userState);
+        }
+        
+        private void OndisplayContactsOperationCompleted(object arg) {
+            if ((this.displayContactsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.displayContactsCompleted(this, new displayContactsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/retrieveContacts", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public string retrieveContacts() {
+            object[] results = this.Invoke("retrieveContacts", new object[0]);
+            return ((string)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void retrieveContactsAsync() {
+            this.retrieveContactsAsync(null);
+        }
+        
+        /// <remarks/>
+        public void retrieveContactsAsync(object userState) {
+            if ((this.retrieveContactsOperationCompleted == null)) {
+                this.retrieveContactsOperationCompleted = new System.Threading.SendOrPostCallback(this.OnretrieveContactsOperationCompleted);
+            }
+            this.InvokeAsync("retrieveContacts", new object[0], this.retrieveContactsOperationCompleted, userState);
+        }
+        
+        private void OnretrieveContactsOperationCompleted(object arg) {
+            if ((this.retrieveContactsCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.retrieveContactsCompleted(this, new retrieveContactsCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -539,6 +775,62 @@ namespace EasyEncryption.EasyEncWS {
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void checkGroupCompletedEventHandler(object sender, checkGroupCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class checkGroupCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal checkGroupCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public bool Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void addGroupCompletedEventHandler(object sender, System.ComponentModel.AsyncCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void displayGrpMemCompletedEventHandler(object sender, displayGrpMemCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class displayGrpMemCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal displayGrpMemCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
     public delegate void getLogsCompletedEventHandler(object sender, getLogsCompletedEventArgs e);
     
     /// <remarks/>
@@ -585,6 +877,110 @@ namespace EasyEncryption.EasyEncWS {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((string[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void displayGroupMemCompletedEventHandler(object sender, displayGroupMemCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class displayGroupMemCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal displayGroupMemCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public System.Data.DataTable Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((System.Data.DataTable)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void retrieveGroupMemCompletedEventHandler(object sender, retrieveGroupMemCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class retrieveGroupMemCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal retrieveGroupMemCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void displayContactsCompletedEventHandler(object sender, displayContactsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class displayContactsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal displayContactsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public System.Data.DataTable Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((System.Data.DataTable)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    public delegate void retrieveContactsCompletedEventHandler(object sender, retrieveContactsCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.7.2046.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class retrieveContactsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal retrieveContactsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public string Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
             }
         }
     }

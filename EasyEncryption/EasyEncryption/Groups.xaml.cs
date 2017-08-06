@@ -85,28 +85,45 @@ namespace EasyEncryption
 
         private void CreateGroup_Click(object sender, RoutedEventArgs e)
         {
-            using (SqlConnection con = new SqlConnection(constring))
+            bool checkgrp = ms.checkGroup(newGroup.Text);
+            if (checkgrp == true)
             {
-                using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Groups WHERE GroupName like @newGroup", con))
-                {
-                    con.Open();
-                    cmd.Parameters.AddWithValue("@newGroup", newGroup.Text);
-                    int groupCount = (int)cmd.ExecuteScalar();
-                    if (groupCount > 0)
-                    {
-                        MessageBox.Show(newGroup.Text + " has already been taken!");
-                    }
-                    else
-                    {
-                        SqlCommand cmd1 = new SqlCommand("INSERT INTO Groups(GroupName) VALUES('" + newGroup.Text + "')", con);
-                        cmd1.ExecuteNonQuery();
-                        SqlCommand cmd2 = new SqlCommand("INSERT INTO UsersGroups(username, GroupName) VALUES('" + username + "' , '" + newGroup.Text + "')", con);
-                        cmd2.ExecuteNonQuery();
-                        MessageBox.Show("New Group: " + newGroup.Text + "!");
-                        myGroups.Items.Refresh();
-                    }
-                }
+                MessageBox.Show(newGroup.Text + " has already been taken!");
             }
+            else
+            {
+                ms.addGroup(username, newGroup.Text);
+                MessageBox.Show("New Group: " + newGroup.Text + " !");
+                this.Hide();
+                Groups g = new Groups();
+                g.Show();
+
+            }
+            //using (SqlConnection con = new SqlConnection(constring))
+            //{
+            //    using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Groups WHERE GroupName like @newGroup", con))
+            //    {
+            //        con.Open();
+            //        cmd.Parameters.AddWithValue("@newGroup", newGroup.Text);
+            //        int groupCount = (int)cmd.ExecuteScalar();
+            //        if (groupCount > 0)
+            //        {
+            //            MessageBox.Show(newGroup.Text + " has already been taken!");
+            //        }
+            //        else
+            //        {
+            //            SqlCommand cmd1 = new SqlCommand("INSERT INTO Groups(GroupName) VALUES('" + newGroup.Text + "')", con);
+            //            cmd1.ExecuteNonQuery();
+            //            SqlCommand cmd2 = new SqlCommand("INSERT INTO UsersGroups(username, GroupName) VALUES('" + username + "' , '" + newGroup.Text + "')", con);
+            //            cmd2.ExecuteNonQuery();
+            //            MessageBox.Show("New Group: " + newGroup.Text + "!");
+            //            this.Hide();
+            //            Groups g = new Groups();
+            //            g.Show();
+                       
+            //        }
+            //    }
+            //}
         }
         private void ListViewItem_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
