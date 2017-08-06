@@ -24,7 +24,7 @@
                 <ListView x:Name="selectedFiles" HorizontalAlignment="Left" Height="302" VerticalAlignment="Top" Width="786" Grid.RowSpan="3" Margin="0,0,0,0">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Filename" Width="200" DisplayMemberBinding="{Binding Originalfilename}"/>
+                            <GridViewColumn Header="Filename" Width="200" DisplayMemberBinding="{Binding Filename}"/>
                             <GridViewColumn Header="Size" Width="100"  DisplayMemberBinding="{Binding Size}"/>
                             <GridViewColumn Header="Path" Width="475"  DisplayMemberBinding="{Binding path}"/>
                         </GridView>
