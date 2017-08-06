@@ -13,8 +13,8 @@
     </Window.Resources>
 
     <Grid>
-        <Label Content="Groups" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Margin="474,20,0,0"/>
-        <Button x:Name="CreateGroup" Content="Create" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="430,387,0,0" Click="CreateGroup_Click"/>
+        <Label Content="Groups" HorizontalAlignment="Left"  Foreground="#FF1D55A0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" Margin="474,20,0,0"/>
+        <Button x:Name="CreateGroup" Style="{StaticResource styleButton}" Content="Create" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="430,387,0,0" Click="CreateGroup_Click"/>
         <ListView x:Name="myGroups" Margin="294,62,294.4,0" SelectionChanged="ListView_SelectionChanged" Height="300" VerticalAlignment="Top">
             <ListView.View>
                 <GridView>

@@ -13,7 +13,7 @@
     </Window.Resources>
 
     <Grid>
-        <Label x:Name="groupTitle" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="337,4,335.4,0" FontSize="20" Width="342">
+        <Label x:Name="groupTitle" Foreground="#FF1D55A0" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="337,4,335.4,0" FontSize="20" Width="342">
         </Label>
         <ListView x:Name="groupMembers"  Margin="184,46,184.4,180.4">
             <ListView.View>
@@ -23,7 +23,7 @@
             </ListView.View>
 
         </ListView>
-        <Button x:Name="addMembers" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="482,525,0,0" Click="addMembers_Click"/>
+        <Button x:Name="addMembers" Content="Add" Style="{StaticResource styleButton}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="482,525,0,0" Click="addMembers_Click"/>
         <DataGrid x:Name="addContacts" HorizontalAlignment="Left" Height="132" VerticalAlignment="Top" Width="283" Margin="184,412,0,0" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Contacts" Binding="{Binding name}" IsReadOnly="true"/>

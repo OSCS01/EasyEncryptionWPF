@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyEncryption"
         mc:Ignorable="d"
-        Title="Login" Height="300" Width="300"
+        Title="Login" Height="416.4" Width="416.4"
         Icon="/Images/logo.jpg">
     <Window.Resources>
         <ResourceDictionary Source="ResourceDic.xaml">
@@ -13,13 +13,13 @@
     </Window.Resources>
 
     <Grid>
-        <Label Content="Login" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="112,41,0,0" FontWeight="Bold" FontSize="20"/>
-        <Label Content="Username" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="53,105,0,0"/>
-        <Label Content="Password" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="58,148,0,0"/>
-        <TextBox x:Name="LoginField" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Margin="122,108,0,0" TextChanged="TextBox_TextChanged"/>
-        <Label Content="Please approach helpdesk to obtain login info." HorizontalAlignment="Left" VerticalAlignment="Top" Margin="17,228,0,0"/>
-        <Button x:Name="LoginButton" Content="Login" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Margin="112,204,0,0" Click="Button_Click"/>
-        <PasswordBox x:Name="PassField" HorizontalAlignment="Left" Margin="122,150,0,0" VerticalAlignment="Top" Width="120" Height="26"/>
+        <Label Content="Login"  Foreground="#FF1D55A0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="174,24,0,0" FontWeight="Bold" FontSize="25" Height="53" Width="91"/>
+        <Label Content="Username" Foreground="#FF1D55A0"  HorizontalAlignment="Left" VerticalAlignment="Top" Margin="93,102,0,0" FontSize="16"/>
+        <Label Content="Password"  Foreground="#FF1D55A0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="98,142,0,0" FontSize="16"/>
+        <TextBox x:Name="LoginField" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" Margin="180,106,0,0" TextChanged="TextBox_TextChanged"/>
+        <Label Content="Please approach helpdesk to obtain login info."  Foreground="#FF1D55A0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="38,321,0,0" FontSize="16"/>
+        <Button x:Name="LoginButton" Style="{StaticResource styleButton}" Content="Login" HorizontalAlignment="Left" VerticalAlignment="Top" Width="85" Margin="174,214,0,0" Click="Button_Click" Height="22"/>
+        <PasswordBox x:Name="PassField" HorizontalAlignment="Left" Margin="180,146,0,0" VerticalAlignment="Top" Width="130" Height="28"/>
 
     </Grid>
 </Window>
