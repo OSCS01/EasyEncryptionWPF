@@ -67,5 +67,6 @@
         <TextBox x:Name="txtFilter" TextChanged="txtFilter_TextChanged" Grid.Column="4" HorizontalAlignment="Left" Height="31" Margin="477.5,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="167" FontSize="16"/>
         <TextBlock Grid.Column="4" HorizontalAlignment="Left" Margin="852.5,-60,-69.5,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
         <Label Foreground="#FF1D55A0" Content="Filter:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="51" Grid.Column="4" Margin="426.5,117,0,0" Height="31" FontSize="16"/>
+        <Button Content="Logout" Style="{StaticResource styleButton}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Grid.Column="4" Margin="703.173,38,0,0" Click="Button_Click"/>
     </Grid>
 </Window>

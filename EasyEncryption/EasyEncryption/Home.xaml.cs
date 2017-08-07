@@ -30,7 +30,7 @@ namespace EasyEncryption
 
         EasyEncWS.MainService ms = new EasyEncWS.MainService();
         string encryptpath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\EncryptedTest\\";
-        string username = "Adam";
+        string username = Login.username;
         GridViewColumnHeader _lastHeaderClicked = null;
         ListSortDirection _lastDirection = ListSortDirection.Descending;
 
@@ -201,13 +201,15 @@ namespace EasyEncryption
 
         private void ViewLogBtn_Click(object sender, RoutedEventArgs e)
         {
-            FileItem item = (FileItem)myFiles.SelectedItem;
-            List<string> fileinfo = new List<string>();
-            fileinfo.Add(item.Filename);
-            fileinfo.Add(item.Owner);
-            fileinfo.Add(item.Group);
-            ViewLog vl = new ViewLog(fileinfo);
-            vl.Show();
+            foreach (FileItem item in myFiles.SelectedItems)
+            {
+                List<string> fileinfo = new List<string>();
+                fileinfo.Add(item.Filename);
+                fileinfo.Add(item.Owner);
+                fileinfo.Add(item.Group);
+                ViewLog vl = new ViewLog(fileinfo);
+                vl.Show();
+            }
         }
 
         public string GetBytesReadable(long i)
@@ -351,6 +353,14 @@ namespace EasyEncryption
         private void txtFilter_TextChanged(object sender, TextChangedEventArgs e)
         {
             CollectionViewSource.GetDefaultView(myFiles.ItemsSource).Refresh();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Login.username = null;
+            this.Close();
+            Login l = new Login();
+            l.Show();
         }
     }
 }

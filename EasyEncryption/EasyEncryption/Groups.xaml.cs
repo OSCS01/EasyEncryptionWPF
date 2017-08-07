@@ -85,20 +85,44 @@ namespace EasyEncryption
 
         private void CreateGroup_Click(object sender, RoutedEventArgs e)
         {
-            bool checkgrp = ms.checkGroup(newGroup.Text);
-            if (checkgrp == true)
+            if (string.IsNullOrWhiteSpace(newGroup.Text))
             {
-                MessageBox.Show(newGroup.Text + " has already been taken!");
+                MessageBox.Show("Please provide an input!");
+
             }
             else
             {
-                ms.addGroup(username, newGroup.Text);
-                MessageBox.Show("New Group: " + newGroup.Text + " !");
-                this.Hide();
-                Groups g = new Groups();
-                g.Show();
+                bool checkgrp = ms.checkGroup(newGroup.Text);
+                if (checkgrp == true)
+                {
+                    MessageBox.Show(newGroup.Text + " has already been taken!");
+                }
+                else
+                {
+                    ms.addGroup(username, newGroup.Text);
+                    MessageBox.Show("New Group: " + newGroup.Text + " !");
+                    this.Hide();
+                    Groups g = new Groups();
+                    g.Show();
+
+                }
 
             }
+            //    bool checkgrp = ms.checkGroup(newGroup.Text);
+            //if (checkgrp == true)
+            //{
+            //    MessageBox.Show(newGroup.Text + " has already been taken!");
+            //}
+            //else
+            //{
+            //    ms.addGroup(username, newGroup.Text);
+            //    MessageBox.Show("New Group: " + newGroup.Text + " !");
+            //    this.Hide();
+            //    Groups g = new Groups();
+            //    g.Show();
+
+            //}
+
             //using (SqlConnection con = new SqlConnection(constring))
             //{
             //    using (SqlCommand cmd = new SqlCommand("SELECT COUNT(*) FROM Groups WHERE GroupName like @newGroup", con))

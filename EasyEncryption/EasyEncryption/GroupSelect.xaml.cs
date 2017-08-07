@@ -22,7 +22,7 @@ namespace EasyEncryption
     /// </summary>
     public partial class GroupSelect : Window
     {
-        string user = "Adam";
+        string user = Login.username;
         EasyEncWS.MainService ms = new EasyEncWS.MainService();
         List<FileInfo> fil;
         string encryptpath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\EncryptedTest\\";
@@ -95,8 +95,8 @@ namespace EasyEncryption
         {
             foreach (FileInfo fileinfo in fil)
             {
-                //string scanResult = scanFile(fileinfo.FullName);
-                string scanResult = "Clean";
+                string scanResult = scanFile(fileinfo.FullName);
+                //string scanResult = "Clean";
                 if (scanResult.Equals("Clean"))
                 {
                     string fileext = fileinfo.Extension;
@@ -137,10 +137,9 @@ namespace EasyEncryption
 
                                             bool result = ms.uploadFiles(fileinfo.Length, grouplist.SelectedItem as string, user, filename, fileext, Convert.ToBase64String(rsa.Encrypt(aes.Key, false)), Convert.ToBase64String(aes.IV), data);
                                             if (!result)
-                                                MessageBox.Show("Same file already exists!", "Error");
-                                            else
-                                                MessageBox.Show("Upload success!", "Success");
+                                                MessageBox.Show(filename + " already exists!", "Error");
                                             File.Delete(encryptpath + filename + ".ee");
+                                            MessageBox.Show(filename + " upload success!", "Success");
                                         }
                                     }
                                 }

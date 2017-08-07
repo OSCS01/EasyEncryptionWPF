@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:EasyEncryption"
         mc:Ignorable="d"
-        Title="ViewLog" Height="505.243" Width="770.088">
+        Title="ViewLog" Height="505.243" Width="770.088"
+        Icon="/Images/logo.jpg">
     <Grid>
         <ListView x:Name="LogView" HorizontalAlignment="Left" Height="458" VerticalAlignment="Top" Width="745" Margin="10,10,0,0"  GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler">
             <ListView.View>
