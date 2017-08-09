@@ -95,8 +95,8 @@ namespace EasyEncryption
         {
             foreach (FileInfo fileinfo in fil)
             {
-                string scanResult = scanFile(fileinfo.FullName);
-                //string scanResult = "Clean";
+                //string scanResult = scanFile(fileinfo.FullName);
+                string scanResult = "Clean";
                 if (scanResult.Equals("Clean"))
                 {
                     string fileext = fileinfo.Extension;
@@ -139,7 +139,6 @@ namespace EasyEncryption
                                             if (!result)
                                                 MessageBox.Show(filename + " already exists!", "Error");
                                             File.Delete(encryptpath + filename + ".ee");
-                                            MessageBox.Show(filename + " upload success!", "Success");
                                         }
                                     }
                                 }

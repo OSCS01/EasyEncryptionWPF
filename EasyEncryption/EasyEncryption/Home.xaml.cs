@@ -37,19 +37,12 @@ namespace EasyEncryption
         public Home()
         {
             InitializeComponent();
-            //try
-            //{
-                getMyFiles(username);
-                getNotification(username);
-                CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(myFiles.ItemsSource);
-                view.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
-                view.Filter = UserFilter;
 
-            //}
-            //catch (Exception e)
-            //{
-            //    System.Windows.Forms.MessageBox.Show("Cannot connect to server", "Error");
-            //}
+            getMyFiles(username);
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(myFiles.ItemsSource);
+            view.SortDescriptions.Add(new SortDescription("Group", ListSortDirection.Ascending));
+            view.Filter = UserFilter;
+
         }
 
         private void Sort(string sortBy, ListSortDirection direction)
@@ -117,6 +110,7 @@ namespace EasyEncryption
             DataTable dt = new DataTable();
             dt.ReadXml(xr);
             List<FileItem> fil = new List<FileItem>();
+            int countdownload = 0;
 
             foreach (DataRow dr in dt.Rows)
             {
@@ -128,23 +122,24 @@ namespace EasyEncryption
                 fi.Group = dr["sharedGroup"].ToString();
                 fi.Owner = dr["Owner"].ToString();
                 fi.Downloaded = ms.getIsDownloaded(fi.Filename, username, fi.Group);
+                if (fi.Downloaded == false)
+                    countdownload++;
                 fil.Add(fi);
             }
             myFiles.ItemsSource = fil;
-        }
-
-        private void getNotification(string username)
-        {
-            int i = ms.retrieveNotification(username);
-            if (i > 0)
-                NotificationLbl.Content = "You have " + i + " files not downloaded!";
+            if (countdownload > 0)
+            {
+                NotificationLbl.Content = "You have " + countdownload + " files not downloaded!";
+                NotificationLbl.Visibility = Visibility.Visible;
+                CloseBtn.Visibility = Visibility.Visible;
+            }
             else
             {
                 NotificationLbl.Visibility = Visibility.Hidden;
                 CloseBtn.Visibility = Visibility.Hidden;
             }
-
         }
+
         private void UploadBtn_Click(object sender, RoutedEventArgs e)
         {
 
@@ -217,17 +212,17 @@ namespace EasyEncryption
             long absolute_i = (i < 0 ? -i : i);
             string suffix;
             double readable;
-            if (absolute_i >= 0x1000000000000000) 
+            if (absolute_i >= 0x1000000000000000)
             {
                 suffix = "EB";
                 readable = (i >> 50);
             }
-            else if (absolute_i >= 0x4000000000000) 
+            else if (absolute_i >= 0x4000000000000)
             {
                 suffix = "PB";
                 readable = (i >> 40);
             }
-            else if (absolute_i >= 0x10000000000) 
+            else if (absolute_i >= 0x10000000000)
             {
                 suffix = "TB";
                 readable = (i >> 30);
@@ -237,19 +232,19 @@ namespace EasyEncryption
                 suffix = "GB";
                 readable = (i >> 20);
             }
-            else if (absolute_i >= 0x100000) 
+            else if (absolute_i >= 0x100000)
             {
                 suffix = "MB";
                 readable = (i >> 10);
             }
-            else if (absolute_i >= 0x400) 
+            else if (absolute_i >= 0x400)
             {
                 suffix = "KB";
                 readable = i;
             }
             else
             {
-                return i.ToString("0 B"); 
+                return i.ToString("0 B");
             }
             readable = (readable / 1024);
             return readable.ToString("0.## ") + suffix;
